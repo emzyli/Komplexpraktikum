@@ -1,0 +1,33 @@
+-boot2docker installieren und starten
+-docker pull gruender/kp-infovis
+-docker run -t -i -p 3000:3000 gruender/kp-infovis
+
+angenommen shared-ordner = C:\Users  
+mappen:
+ ordner, auf dem ich arbeiten will anlegen (Bsp= C:\Benutzer\Emma\Dokumente\KPInfovis (im B2D-Img = /c/Users/Emma/Documents/KPInfovis/ )
+-docker run -t -i -p 3000:3000 -v /c/Users/Emma/Documents/KPInfovis/:/test/code gruender/kp-infovis
+-cd /test/
+-meteor create testapp
+-cd testapp
+-mv *.* /test/code
+-mv .meteor /test/
+-cd /test/
+(-meteor add nemo64:bootstrap	<--- Bootstrap hinzufügen--->
+ -meteor add less)
+-meteor
+
+----bis dahin getestet----
+
+Änderung im Container gruender/kp-infovis speichern:
+-App stoppen (mit Strg+C)
+-exit 
+-docker ps -a
+-docker commit <Code am Anfang des obersten Eintrags(sowas wie 6caa43123)> <neuer Name zum Beispiel kpinfovis>
+
+beim nächsten mal mit stand weiter machen:
+"docker run -t -i -p 3000:3000 -v /c/Users/Emma/Documents/KPInfovis/:/test/code <neuer Name zum Beispiel kpinfovis>
+
+
+Wenn meteor EXDEF-Fehler anzeigt:
+-rm -rf /test/.meteor/local/build
+
