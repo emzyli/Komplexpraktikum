@@ -11,15 +11,31 @@
 <template name="navi">
     <nav>
         <div class="buttonPosition">
-            <a href=""><div class="button" id="backBtn">zurück</div></a><br />
+            <a href="">
+              <div class="button" id="backBtn">
+                <!--img class="icon" src="icons/icons.svg" alt="zurück"/-->
+                <!--ACHTUNG: Lückenfüller, NICHT DIE FINALEN ICONS!!!!-->
+                <img src="http://41.media.tumblr.com/c6e421712dbe1080cd6d3a1e9c5f9994/tumblr_ngwml9ah0h1tgwah6o3_1280.png" class="icon"  />
+              </div>
+            </a><!--width="98" height="120"-->
             <label>zurück</label><br />
         </div>
         <div class="buttonPosition">
-            <a href=""><div class="button" id="roomBtn"><img src="Bilder/icons.png" alt="räume"/></div></a><br />
+            <a href="">
+              <div class="button" id="roomBtn">
+                <!--ACHTUNG: Lückenfüller, NICHT DIE FINALEN ICONS!!!!-->
+                <img class="icon" src="http://40.media.tumblr.com/ccbf94ebda911ee2871e05dfaf43b65a/tumblr_ngwml9ah0h1tgwah6o1_1280.png" alt="räume"/>
+              </div>
+            </a>
             <label>Räume</label><br />
         </div>
         <div class="buttonPosition">
-            <a href=""><div class="button" id="filterBtn"><img src="Bilder/icons.png" alt="filter"/></div></a><br />
+            <a href="">
+              <div class="button" id="filterBtn">
+                <!--ACHTUNG: Lückenfüller, NICHT DIE FINALEN ICONS!!!!-->
+                <img class="icon" src="http://40.media.tumblr.com/c1025bad36ea6316559748ae246c1607/tumblr_ngwml9ah0h1tgwah6o4_1280.png" alt="filter"/>
+              </div>
+            </a>
             <label>Filter</label><br />
         </div>
     </nav>
@@ -27,7 +43,11 @@
 
 <template name="content">
     <section>
-        <button class="btn btn-default">Kick Me</button>
-        <p>You've pressed the button {{counter}}........ times.</p>
-    </section>>
+      <div>
+        <iframe
+                src="https://www.google.com/maps/embed?pb=!1m53!1m12!1m3!1d2509.3487741214044!2d13.732085063138102!3d51.02817876208714!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m38!1i0!3e2!4m5!1s0x4709db66d2d9b81d%3A0xee703a2669f3a34a!2sPienner+Stra%C3%9Fe+15%2C+01737+Tharandt%2C+Deutschland!3m2!1d50.980694899999996!2d13.581511899999999!4m5!1s0x4709c8b701ff3671%3A0x3b2437a0691d1116!2sStaats-+und+Universit%C3%A4tsbibliothek+Dresden+%E2%80%93+Zweigbibliothek+Medizin%2C+Fiedlerstra%C3%9Fe+27%2C+01307+Dresden%2C+Deutschland!3m2!1d51.054680999999995!2d13.782772!4m5!1s0x4709c5fc90138225%3A0x5fb1957e5a64f50b!2sAugust-Bebel-Stra%C3%9Fe+18%2C+01219+Dresden%2C+Deutschland!3m2!1d51.0312056!2d13.753355299999999!4m5!1s0x4709c5ee4dea4fa3%3A0xfe7c92b46e568350!2sZellescher+Weg+17%2C+01069+Dresden%2C+Deutschland!3m2!1d51.0294126!2d13.739140599999999!4m5!1s0x4709c5ecf6e8f4ff%3A0x4b88e468a621ba75!2sS%C3%A4chsische+Landesbibliothek+-+Staats-+und+Universit%C3%A4tsbibliothek+Dresden+Zweigbibliothek+Rechtswissenschaften%2C+Bergstra%C3%9Fe+53%2C+01069+Dresden%2C+Deutschland!3m2!1d51.02831!2d13.73193!4m5!1s0x4709c5edd4d1035d%3A0x7788b2023f24a784!2sSLUB%2C+Zellescher+Weg+18%2C+01069+Dresden%2C+Deutschland!3m2!1d51.02862!2d13.736834!5e0!3m2!1sde!2sde!4v1421430845754"
+                width="1500px" height="1536px" frameborder="0" style="border:0">
+        </iframe><br />
+        </div>
+    </section>
 </template>

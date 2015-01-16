@@ -7,7 +7,7 @@ nav {
         color-stop(0%,rgba(0,0,0,0.61)),
         color-stop(99%,rgba(0,0,0,0.83)),
         color-stop(100%,rgba(0,0,0,0.83)));
-    border-right: solid #cc0000;
+    border-right: 5px solid #cc0000;
     float: left;
     color:#fff;
     font-size: 24pt;
@@ -17,11 +17,20 @@ nav {
     border: solid #000;
 }
 .buttonPosition{
+    padding-top: 10px;
     height:175px;
     text-align: center;
 }
 #backBtn{
-    background: url(http://www.e2marketing.de/wp-content/uploads/2014/01/bilder-im-online-marketing.jpg%3F330e3c) no-repeat;
+   /* background: url(http://www.e2marketing.de/wp-content/uploads/2014/01/bilder-im-online-marketing.jpg%3F330e3c) no-repeat;
     background-position: 0 -300px;
-    background-size: 125px 125px;
+    background-size: 125px 125px;*/
+}
+#roomBtn{
+
+}
+.icon{
+    height:125px;
+    width:125px;
+
 }
