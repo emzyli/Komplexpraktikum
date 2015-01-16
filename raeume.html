@@ -1,14 +1,27 @@
 <head>
-  <title>testapp</title>
+  <title>Gruppenarbeitsräume</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
-
-  {{> hello}}
+  {{> navi}}
+  {{> content}}
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}}........ times.</p>
+<template name="navi">
+    <nav>
+        <div class="button"><button class="btn btn-default">Kick Me</button></div><br />
+        <label>zurück</label><br />
+        <div class="button"><button class="btn btn-default">Kick Me</button></div><br />
+        <label>Räume</label><br />
+        <div class="button"><button class="btn btn-default">Kick Me</button></div><br />
+        <label>Filter</label><br />
+    </nav>
+</template>
+
+<template name="content">
+    <section>
+        <button class="btn btn-default">Kick Me</button>
+        <p>You've pressed the button {{counter}}........ times.</p>
+    </section>>
 </template>

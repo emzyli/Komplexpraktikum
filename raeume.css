@@ -1,1 +1,18 @@
-/* CSS declarations go here */
+nav {
+    height: 1536px;
+    /* height: 100%;*/
+    width: 220px;
+    /*width: 14%;*/
+    background: -webkit-gradient(linear, left top, right top,
+        color-stop(0%,rgba(0,0,0,0.61)),
+        color-stop(99%,rgba(0,0,0,0.83)),
+        color-stop(100%,rgba(0,0,0,0.83)));
+    border-right: solid #cc0000;
+    float: left;
+    color:#fff;
+    font-size: 24pt;
+    text-align: center;
+}/* CSS declarations go here */
+.content{
+    border: solid #000;
+}
