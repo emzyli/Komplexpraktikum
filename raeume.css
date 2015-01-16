@@ -16,3 +16,12 @@ nav {
 .content{
     border: solid #000;
 }
+.buttonPosition{
+    height:175px;
+    text-align: center;
+}
+#backBtn{
+    background: url(http://www.e2marketing.de/wp-content/uploads/2014/01/bilder-im-online-marketing.jpg%3F330e3c) no-repeat;
+    background-position: 0 -300px;
+    background-size: 125px 125px;
+}

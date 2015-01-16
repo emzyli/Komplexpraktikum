@@ -10,12 +10,18 @@
 
 <template name="navi">
     <nav>
-        <div class="button"><button class="btn btn-default">Kick Me</button></div><br />
-        <label>zurück</label><br />
-        <div class="button"><button class="btn btn-default">Kick Me</button></div><br />
-        <label>Räume</label><br />
-        <div class="button"><button class="btn btn-default">Kick Me</button></div><br />
-        <label>Filter</label><br />
+        <div class="buttonPosition">
+            <a href=""><div class="button" id="backBtn">zurück</div></a><br />
+            <label>zurück</label><br />
+        </div>
+        <div class="buttonPosition">
+            <a href=""><div class="button" id="roomBtn"><img src="Bilder/icons.png" alt="räume"/></div></a><br />
+            <label>Räume</label><br />
+        </div>
+        <div class="buttonPosition">
+            <a href=""><div class="button" id="filterBtn"><img src="Bilder/icons.png" alt="filter"/></div></a><br />
+            <label>Filter</label><br />
+        </div>
     </nav>
 </template>
 
