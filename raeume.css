@@ -1,3 +1,7 @@
+a {
+   color: #4defff;
+}
+
 nav {
     height: 1536px;
     /* height: 100%;*/
@@ -20,15 +24,29 @@ nav {
     padding-top: 10px;
     height:175px;
     text-align: center;
+    margin-top: 30px;
 }
+
+.button{
+    background:url('icons.png') no-repeat;
+    background-size: 200px;
+    width: 125px;
+    height: 125px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
 #backBtn{
-   /* background: url(http://www.e2marketing.de/wp-content/uploads/2014/01/bilder-im-online-marketing.jpg%3F330e3c) no-repeat;
-    background-position: 0 -300px;
-    background-size: 125px 125px;*/
+    background-position: 10px -210px;
 }
 #roomBtn{
-
+    background-position: -100px 10px;
 }
+#filterBtn{
+    background-position: 10px -110px;
+}
+
 .icon{
     height:125px;
     width:125px;

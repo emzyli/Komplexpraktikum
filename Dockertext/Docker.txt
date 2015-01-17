@@ -13,7 +13,8 @@ mappen:
 -mv .meteor /test/
 -cd /test/
 (-meteor add nemo64:bootstrap	<--- Bootstrap hinzufügen--->
- -meteor add less)
+ -meteor add less
+-meteor add ...:hammer)
 -meteor
 
 ----bis dahin getestet----
@@ -31,3 +32,8 @@ beim nächsten mal mit stand weiter machen:
 Wenn meteor EXDEF-Fehler anzeigt:
 -rm -rf /test/.meteor/local/build
 
+--- Bilder einbinden ---
+# muessen in den test/public Ordner geladen werden
+# dazu docker run -t -i [..blabla] ausfuehren
+# cp test/code/Bilder/[Bildname] public # kopiert Bild
+# dann ist das Bild von ueberall zugaenglich (kein Pfad noetig, Dateiname reicht)
