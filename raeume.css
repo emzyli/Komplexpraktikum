@@ -73,4 +73,9 @@ iframe {
     position: absolute;
     border-right: 5px solid #cc0000;
 }
+#frameContent{
+    width: 2048px;
+    height: 1536px;
+    border: 0;
 
+}
