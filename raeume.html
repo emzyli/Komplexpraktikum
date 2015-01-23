@@ -12,10 +12,14 @@
 <template name="content">
     <section>
         <div>
-            <iframe id="frameContent"
-                src="https://www.google.com/maps/embed?pb=!1m53!1m12!1m3!1d2509.3487741214044!2d13.732085063138102!3d51.02817876208714!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m38!1i0!3e2!4m5!1s0x4709db66d2d9b81d%3A0xee703a2669f3a34a!2sPienner+Stra%C3%9Fe+15%2C+01737+Tharandt%2C+Deutschland!3m2!1d50.980694899999996!2d13.581511899999999!4m5!1s0x4709c8b701ff3671%3A0x3b2437a0691d1116!2sStaats-+und+Universit%C3%A4tsbibliothek+Dresden+%E2%80%93+Zweigbibliothek+Medizin%2C+Fiedlerstra%C3%9Fe+27%2C+01307+Dresden%2C+Deutschland!3m2!1d51.054680999999995!2d13.782772!4m5!1s0x4709c5fc90138225%3A0x5fb1957e5a64f50b!2sAugust-Bebel-Stra%C3%9Fe+18%2C+01219+Dresden%2C+Deutschland!3m2!1d51.0312056!2d13.753355299999999!4m5!1s0x4709c5ee4dea4fa3%3A0xfe7c92b46e568350!2sZellescher+Weg+17%2C+01069+Dresden%2C+Deutschland!3m2!1d51.0294126!2d13.739140599999999!4m5!1s0x4709c5ecf6e8f4ff%3A0x4b88e468a621ba75!2sS%C3%A4chsische+Landesbibliothek+-+Staats-+und+Universit%C3%A4tsbibliothek+Dresden+Zweigbibliothek+Rechtswissenschaften%2C+Bergstra%C3%9Fe+53%2C+01069+Dresden%2C+Deutschland!3m2!1d51.02831!2d13.73193!4m5!1s0x4709c5edd4d1035d%3A0x7788b2023f24a784!2sSLUB%2C+Zellescher+Weg+18%2C+01069+Dresden%2C+Deutschland!3m2!1d51.02862!2d13.736834!5e0!3m2!1sde!2sde!4v1421430845754"
-                width="1500" height="1536" frameborder="0" style="border:0">
-            </iframe><br />
+            <iframe
+                id="frameContent"
+                width="2048"
+                height="1536"
+                border="0" scrolling="no" marginheight="0" marginwidth="0"
+                src="map.svg">
+            </iframe><br/>
+           
         </div>
     </section>
 </template>
@@ -24,7 +28,7 @@
     <nav>
         <div class="buttonPosition">
             <!--temporaere Referenz-->
-            <a href="#" onclick="if(document.getElementById('menu').style.display=='none') document.getElementById('menu').style.display = 'block'; else document.getElementById('menu').style.display = 'none'">
+            <a href="#">
               <div class="button" id="backBtn"></div>
               <label>Zur&uuml;ck</label><br />
             </a>

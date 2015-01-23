@@ -31,8 +31,8 @@ if (Meteor.isServer) {
 
 //rollt Menu ein/aus
 function toggleMenu1() {
-    //if($('#menu').css('display') == 'none')
-    //    $('#menu').effect('slide', { direction: 'right', mode: 'show' });
-    //else
-    //    $('#menu').effect('slide', { direction: 'left', mode: 'hide' });
+    if($('#menu').css('display') == 'none')
+        $('#menu').effect('slide', { direction: 'right', mode: 'show' });
+    else
+        $('#menu').effect('slide', { direction: 'left', mode: 'hide' });
 }
