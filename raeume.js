@@ -11,6 +11,14 @@ if (Meteor.isClient) {
         }
     });
 
+    Template.content.events({
+       'mouseover iframe#frameContent' : function() {
+              $("#Raum046").mouseenter(function () {
+                  $("#Raum046").css
+              })
+       }
+    });
+
   Template.start.events({
       'click div#start': function () {
             hideStart();
