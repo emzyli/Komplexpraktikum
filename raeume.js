@@ -2,6 +2,7 @@ if (Meteor.isClient) {
 
     //setTimeout(hideStart(), 500 );
 
+
     Template.navi.events({
         'click div#roomBtn': function () {
             toggleMenuR();
@@ -12,15 +13,13 @@ if (Meteor.isClient) {
     });
 
     Template.content.events({
-       'mouseover iframe#frameContent' : function() {
-              $("#Raum046").mouseenter(function () {
-                  $("#Raum046").css
-              })
+       'mouseover iframe' : function() {
+           interactWithSVG();
        }
     });
 
   Template.start.events({
-      'click div#start': function () {
+      'mouseover div#start': function () {
             hideStart();
        }
    });
@@ -55,10 +54,17 @@ if (Meteor.isClient) {
 
     //schließt Anfangsbild
     function hideStart(){
+            $('#icon').fadeOut("slow");
             $('#start').fadeOut("slow");
-        //   $('#start').css('visibility', 'hidden');
-            $('#content').css('visibility', 'visible');
-            $('nav').css('visibility', 'visible');
+            $('#content').css('visibility','visible').hide().fadeIn('slow');//.css('visibility', 'visible');
+            $('nav').css('visibility','visible').hide().fadeIn('slow');
          // /   $('#start').delay(1000).fadeIn(250).delay(5000).fadeOut(250);
+    }
+
+    function interactWithSVG() {
+        var svg = $('#frameContent').svg('get');
+        $("#backgroundcolor", svg.root()).bind('click', function () {
+            alert('path clicked');
+        });
     }
 }

@@ -1,6 +1,7 @@
 a {
    color: #4defff;
    text-decoration: none;
+   cursor:pointer;
 }
 
 nav {
@@ -81,7 +82,6 @@ iframe {
 #frameContent{
     width: 1828px;
     height: 1536px;
-    border: 0;
 
 }
 

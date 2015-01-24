@@ -3,10 +3,11 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="-402 0 1828 1536" enable-background="new -402 0 1828 1536" xml:space="preserve">
+<g transform="scale(2)">
 <g id="Hintergrund">
 	<rect x="-402" fill="#ECECEC" width="1828" height="1536"/>
 </g>
-<g transform="scale(2)">
+
 	<g id="Wände_Notausgänge">
 		<polygon fill="#FFFFFF" stroke="#000000" stroke-width="0.25" stroke-miterlimit="10" points="482.3,141.3 482.3,130 356.8,130 
 			356.8,220.8 49,220.8 49,129.2 -76.6,129.2 -76.6,765.5 -41.7,765.5 -41.7,750.9 440.6,750.9 440.6,651.5 481.8,651.5 
@@ -634,7 +635,7 @@
 		<circle fill="#FFFFFF" stroke="#1D1D1B" stroke-width="0.25" stroke-miterlimit="10" cx="-38.7" cy="222.4" r="1.6"/>
 		<circle fill="#FFFFFF" stroke="#1D1D1B" stroke-width="0.25" stroke-miterlimit="10" cx="-44.2" cy="222.4" r="1.6"/>
 		
-			<rect x="-65.3" y="211.5" fill="#FFFFFF" stroke="#1D1D1B" stroke-width="0.25" stroke-miterlimit="10" width="29.4" height="10.9"/>
+		<rect class="backgroundcolor" x="-65.3" y="211.5" fill="#FFFFFF" stroke="#1D1D1B" stroke-width="0.25" stroke-miterlimit="10" width="29.4" height="10.9"/>
 	</g>
 	<g id="Raum043">
 		<circle fill="#FFFFFF" stroke="#1D1D1B" stroke-width="0.25" stroke-miterlimit="10" cx="147" cy="231.9" r="1.6"/>
