@@ -61,6 +61,7 @@ if (Meteor.isClient) {
          // /   $('#start').delay(1000).fadeIn(250).delay(5000).fadeOut(250);
     }
 
+    //dafür wird das jQuery SVG benötigt --> hab ich für meteor noch nicht gefunden
     function interactWithSVG() {
         var svg = $('#frameContent').svg('get');
         $("#backgroundcolor", svg.root()).bind('click', function () {
