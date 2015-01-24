@@ -4,6 +4,7 @@ a {
 }
 
 nav {
+    visibility: hidden;
     height: 1536px;
     /* height: 100%;*/
     width: 220px;
@@ -18,10 +19,14 @@ nav {
     font-size: 24pt;
     text-align: center;
     position: absolute;
+    top:0px;
 }
 
 /* CSS declarations go here */
-.content{
+section div#content{
+    position: absolute;
+    top:0px;
+   visibility: hidden;
 }
 
 iframe {
@@ -74,8 +79,19 @@ iframe {
     border-right: 5px solid #cc0000;
 }
 #frameContent{
-    width: 2048px;
+    width: 1828px;
     height: 1536px;
     border: 0;
 
+}
+
+#start{
+    width: 2048px;
+    height: 1536px;
+    background-color: #cc0000;
+}
+
+#icon{
+    align-self: center;
+    vertical-align: middle;
 }

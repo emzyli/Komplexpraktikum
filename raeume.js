@@ -1,19 +1,6 @@
 if (Meteor.isClient) {
-    // counter starts at 0
-    Session.setDefault("counter", 0);
 
-    /*  Template.hello.helpers({
-        counter: function () {
-          return Session.get("counter");
-        }
-      });
-    
-      Template.hello.events({
-        'click button': function () {
-          // increment the counter when button is clicked
-          Session.set("counter", Session.get("counter") + 1);
-        }
-      });*/
+    //setTimeout(hideStart(), 500 );
 
     Template.navi.events({
         'click div#roomBtn': function () {
@@ -23,6 +10,12 @@ if (Meteor.isClient) {
             toggleMenuF();
         }
     });
+
+  Template.start.events({
+      'click div#start': function () {
+            hideStart();
+       }
+   });
 
     if (Meteor.isServer) {
         Meteor.startup(function () {
@@ -50,5 +43,14 @@ if (Meteor.isClient) {
         else
             $('#menu').effect('slide', { direction: 'right', mode: 'hide' });
       
+    }
+
+    //schließt Anfangsbild
+    function hideStart(){
+            $('#start').fadeOut("slow");
+        //   $('#start').css('visibility', 'hidden');
+            $('#content').css('visibility', 'visible');
+            $('nav').css('visibility', 'visible');
+         // /   $('#start').delay(1000).fadeIn(250).delay(5000).fadeOut(250);
     }
 }
