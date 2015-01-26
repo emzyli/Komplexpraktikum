@@ -9,6 +9,11 @@
   {{> content}}
 </body>
 
+<template name="start">
+    <div id="start">
+        <img id="icon" src="Deckblatt.svg" />
+    </div>
+</template>
 
 <template name="content">
     <section >
@@ -16,47 +21,56 @@
             <iframe
                     id="frameContent"
                     scrolling="yes" marginheight="0" marginwidth="0"
-                    src="Ebene0.svg">
+                    src="Ebene0.svg"  >
             </iframe><br />
+            <div class="levelBtn" id="up">
+                 <a href="levelUp">
+                     <div class="arrow" id="levelUp"></div>
+                 </a>
+            </div>
+            <div class="levelBtn" id="down">
+                <a href="levelUp">
+                    <div class="arrow" id="levelDown"></div>
+                </a>
+            </div>
         </div>
     </section>
 </template>
 
 <template name="navi">
     <nav>
-        <div id="menu">
-            <ul>
-                <li>
-
-                </li>
-            </ul>
-        </div>
-        <div class="buttonPosition">
+        <div class="buttonPosition" id="first">
             <!--temporaere Referenz-->
-            <a href="#">
-              <div class="button"></div>
+            <a href="#" >
+              <div class="button" id="backBtn"></div>
               <label>Zur&uuml;ck</label><br />
             </a>
         </div>
-        <div class="buttonPosition" id="roomBtn">
+        <div class="buttonPosition" >
             <a href="#">
-              <div class="button"></div>            
+              <div class="button" id="roomBtn"></div>
               <label>R&auml;ume</label><br />
             </a>
         </div>
-        <div class="buttonPosition" id="filterBtn">
+        <div class="buttonPosition" >
+        <a href="#">
+            <div class="button" id="filterBtn"></div>
+            <label>Filter</label><br />
+        </a>
+    </div>
+        <div class="buttonPosition" >
             <a href="#">
-              <div class="button"></div>           
-              <label>Filter</label><br />
+                <div class="button" id="infoBtn"></div>
+                <label>Infos</label><br />
             </a>
-        </div>  
+        </div>
         <!--temporaerer "Weiter-Button">
         <button class="btn btn-default" style='margin-top:100px' onclick="document.getElementById('frameContent').setAttribute('src', 'Ebene0.pdf')">Weiter</button-->
+
+        <div class="tower">
+            <!--TODO: bei Wechsel der SVG die Zahl als Variable abändern-->
+            Ebene 0
+        </div>
     </nav>
 </template>
 
-<template name="start">
-    <div id="start">
-        <img id="icon" src="Deckblatt.svg" />
-    </div>
-</template>

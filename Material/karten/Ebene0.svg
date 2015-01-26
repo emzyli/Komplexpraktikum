@@ -3,7 +3,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="-402 0 1828 1536" enable-background="new -402 0 1828 1536" xml:space="preserve">
-<g transform="scale(2)">
+<g transform="scale(2)" style="font-family:'sans-serif'">
 <g id="Hintergrund">
 	<rect x="-402" fill="#ECECEC" width="1828" height="1536"/>
 </g>
@@ -731,7 +731,7 @@
 	<g id="Icon">
 		<g>
 			<ellipse opacity="0.5" fill="#666666" enable-background="new    " cx="26.1" cy="576.9" rx="11.7" ry="11.2"/>
-			<text transform="matrix(0.5 0 0 0.5 23.7065 583.6377)" fill="#FFFFFF" font-family="'ArialMT'" font-size="40.9258">i</text>
+			<text transform="matrix(0.5 0 0 0.5 23.7065 583.6377)" fill="#FFFFFF" font-family="'Sans-serif'" font-size="40.9258">i</text>
 		</g>
 		<g>
 			<path fill="#4DEFFF" d="M167.4,237.7c0,6.3-5.1,11.4-11.4,11.4s-11.4-5.1-11.4-11.4c0-6.3,5.1-11.4,11.4-11.4
@@ -889,11 +889,11 @@
 		</g>
 		<g>
 			<ellipse opacity="0.5" fill="#666666" enable-background="new    " cx="319.2" cy="669.4" rx="11.7" ry="11.2"/>
-			<text transform="matrix(0.5 0 0 0.5 316.8091 676.2129)" fill="#FFFFFF" font-family="'ArialMT'" font-size="40.9258">i</text>
+			<text transform="matrix(0.5 0 0 0.5 316.8091 676.2129)" fill="#FFFFFF" font-family="'sans-serif'" font-size="40.9258">i</text>
 		</g>
 		<g>
 			<ellipse opacity="0.5" fill="#666666" enable-background="new    " cx="526.6" cy="380" rx="11.7" ry="11.2"/>
-			<text transform="matrix(0.5 0 0 0.5 524.2544 386.8389)" fill="#FFFFFF" font-family="'ArialMT'" font-size="40.9258">i</text>
+			<text transform="matrix(0.5 0 0 0.5 524.2544 386.8389)" fill="#FFFFFF" font-family="'sans-serif'" font-size="40.9258">i</text>
 		</g>
 	</g>
 </g>

@@ -1,3 +1,9 @@
+/**(Emma)
+WICHTIG:
+Breite und Höhe sind am iPad getestet und stimmen so!
+Bei height:1536 gibts scollbalken, bei 1535 ist es nicht ganz ausgefüllt.
+**/
+
 a {
    color: #4defff;
    text-decoration: none;
@@ -6,9 +12,9 @@ a {
 
 nav {
     visibility: hidden;
-    height: 1536px;
+    height: 1534px;
     /* height: 100%;*/
-    width: 220px;
+    width: 320px;
     /*width: 14%;*/
     background: -webkit-gradient(linear, left top, right top,
         color-stop(0%,rgba(0,0,0,0.61)),
@@ -23,45 +29,82 @@ nav {
     top:0px;
 }
 
-/* CSS declarations go here */
 section div#content{
     position: absolute;
     top:0px;
-   visibility: hidden;
-}
-
-iframe {
-    margin-left: 220px;
+    visibility: hidden;
+    margin-left: 320px;
+    background-color: #ECECEC;
+    border: none;
+    height: 1535px;
 }
 
 
 .buttonPosition{
     padding-top: 10px;
-    height:175px;
-    text-align: center;
+    height:171px;
+    margin-top: 60px;
+}
+.buttonPosition #first{
     margin-top: 30px;
 }
-
 .button{
-    background:url('icons.png') no-repeat;
-    background-size: 200px;
     width: 125px;
     height: 125px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 30px;
 }
 
 #backBtn{
-    background-position: 10px -210px;
+    background:url('icon_back.svg') no-repeat;
+    background-size: 125px;
+    margin-left: auto;
+    margin-right: auto;
+  /*  background-position: 10px -210px;*/
 }
 #roomBtn{
-    background-position: -100px 10px;
+    background:url('icon_ort.svg') no-repeat;
+    background-size: 125px;
+    margin-left: auto;
+    margin-right: auto;
+    /*background-position: -100px 10px;*/
 }
 #filterBtn{
-    background-position: 10px -110px;
+    background:url('icon_filter.svg') no-repeat;
+    background-size: 125px;
+    margin-left: auto;
+    margin-right: auto;
+    /*background-position: 10px -110px;*/
 }
-
+#infoBtn{
+    background:url('icon_info.svg') no-repeat;
+    background-size: 125px;
+    margin-left: auto;
+    margin-right: auto;
+    /*background-position: 10px -110px;*/
+}
+#backBtn:active{
+    background:url('icon_backRot.svg') no-repeat;
+    background-size: 125px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#roomBtn:active{
+    background:url('icon_ortRot.svg') no-repeat;
+    background-size: 125px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#filterBtn:active{
+    background:url('icon_filterRot.svg') no-repeat;
+    background-size: 125px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#infoBtn:active{
+    background:url('icon_infoRot.svg') no-repeat;
+    background-size: 125px;
+    margin-left: auto;
+    margin-right: auto;
+}
 .icon{
     height:125px;
     width:125px;
@@ -72,7 +115,7 @@ iframe {
     color: black;
     background-color: white;
     opacity: 0.8;
-    height: 1536px;
+    height: 1535px;
     width: 440px;
     margin-left: 220px;
     display: none;
@@ -80,18 +123,68 @@ iframe {
     border-right: 5px solid #cc0000;
 }
 #frameContent{
-    width: 1828px;
-    height: 1536px;
-
+    width: 1727px;
+    height: 1535px;
 }
 
 #start{
-    width: 2048px;
-    height: 1536px;
+    width: 2047px;
+    height: 1535px;
     background-color: #cc0000;
 }
 
 #icon{
     align-self: center;
     vertical-align: middle;
+}
+
+.tower{
+    width: 100%;
+    height: 234px;
+
+    position: absolute;
+    bottom: 36px;
+
+    text-align: center;
+    font-size: 36pt;
+    font-weight: bold;
+
+}
+
+.levelBtn{
+    width:100%;
+    height:96px;
+    text-align: center;
+    background: #fff;
+    opacity: 0.56;
+}
+.levelBtn#up{
+    position: absolute;
+    top: 0px;
+    border-bottom: 1px solid #666;
+}
+.levelBtn#down {
+    position: absolute;
+    bottom: 0px;
+    border-top: 1px solid #666;
+}
+
+.arrow{
+    width: 125px;
+    height: 96px;
+}
+#levelUp{
+    margin-top: 22px;
+    background:url('Pfeil.svg') no-repeat;
+    background-size: 125px;
+    margin-left: 45%;
+    opacity: 1;
+}
+#levelDown{
+    margin-top: -22px;
+    background:url('Pfeil.svg') no-repeat;
+    transform:rotate(180deg);
+    background-size: 125px;
+    margin-left: 45%;
+    opacity: 1;
 }
