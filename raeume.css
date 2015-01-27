@@ -29,7 +29,7 @@ nav {
     top:0px;
 }
 
-section div#content{
+section div#content {
     position: absolute;
     top:0px;
     visibility: hidden;
@@ -39,73 +39,82 @@ section div#content{
     height: 1535px;
 }
 
-
-.buttonPosition{
+.buttonPosition {
     padding-top: 10px;
     height:171px;
     margin-top: 60px;
 }
-.buttonPosition #first{
+
+.buttonPosition #first {
     margin-top: 30px;
 }
-.button{
+
+.button {
     width: 125px;
     height: 125px;
 }
 
-#backBtn{
+#backBtn {
     background:url('icon_back.svg') no-repeat;
     background-size: 125px;
     margin-left: auto;
     margin-right: auto;
   /*  background-position: 10px -210px;*/
 }
-#roomBtn{
+
+#roomBtn {
     background:url('icon_ort.svg') no-repeat;
     background-size: 125px;
     margin-left: auto;
     margin-right: auto;
     /*background-position: -100px 10px;*/
 }
-#filterBtn{
+
+#filterBtn {
     background:url('icon_filter.svg') no-repeat;
     background-size: 125px;
     margin-left: auto;
     margin-right: auto;
     /*background-position: 10px -110px;*/
 }
-#infoBtn{
+
+#infoBtn {
     background:url('icon_info.svg') no-repeat;
     background-size: 125px;
     margin-left: auto;
     margin-right: auto;
     /*background-position: 10px -110px;*/
 }
-#backBtn:active{
+
+#backBtn:active {
     background:url('icon_backRot.svg') no-repeat;
     background-size: 125px;
     margin-left: auto;
     margin-right: auto;
 }
-#roomBtn:active{
+
+#roomBtn:active {
     background:url('icon_ortRot.svg') no-repeat;
     background-size: 125px;
     margin-left: auto;
     margin-right: auto;
 }
-#filterBtn:active{
+
+#filterBtn:active {
     background:url('icon_filterRot.svg') no-repeat;
     background-size: 125px;
     margin-left: auto;
     margin-right: auto;
 }
-#infoBtn:active{
+
+#infoBtn:active {
     background:url('icon_infoRot.svg') no-repeat;
     background-size: 125px;
     margin-left: auto;
     margin-right: auto;
 }
-.icon{
+
+.icon {
     height:125px;
     width:125px;
 }
@@ -122,13 +131,13 @@ section div#content{
     position: absolute;
     border-right: 5px solid #cc0000;
 }
-#frameContent{
+
+#frameContent {
     width: 1727px;
     height: 1535px;
-    /*width:2048px;*/
 }
 
-#start{
+#start {
     width: 2047px;
     height: 1535px;
     background-color: #cc0000;
@@ -139,7 +148,7 @@ section div#content{
     vertical-align: middle;
 }
 
-.tower{
+.tower {
     width: 100%;
     height: 234px;
 
@@ -151,7 +160,8 @@ section div#content{
     font-weight: bold;
 
 }
-#tower{
+
+#tower {
     background:url('stapel.svg') no-repeat;
     background-size: 111px;
     width:101px;
@@ -159,36 +169,46 @@ section div#content{
     margin-left: auto;
     margin-right: auto;
 }
-.levelBtn{
+
+.levelBtn {
     width:100%;
     height:96px;
     text-align: center;
     background: #fff;
     opacity: 0.56;
 }
-.levelBtn#up{
+
+.levelBtn#up {
     position: absolute;
     top: 0px;
     border-bottom: 1px solid #666;
 }
+
 .levelBtn#down {
     position: absolute;
     bottom: 0px;
     border-top: 1px solid #666;
 }
 
-.arrow{
+.arrow {
     width: 125px;
     height: 96px;
 }
-#levelUp{
+
+.arrow:disabled {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+#levelUp {
     margin-top: 22px;
     background:url('Pfeil.svg') no-repeat;
     background-size: 125px;
     margin-left: 45%;
     opacity: 1;
 }
-#levelDown{
+
+#levelDown {
     margin-top: -22px;
     background:url('Pfeil.svg') no-repeat;
     transform:rotate(180deg);
@@ -196,3 +216,8 @@ section div#content{
     margin-left: 45%;
     opacity: 1;
 }
+
+/*.levelBtn#levelUp:disabled,
+.levelBtn#levelDown:disabled {
+
+}*/
