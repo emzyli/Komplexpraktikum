@@ -195,11 +195,6 @@ section div#content {
     height: 96px;
 }
 
-.arrow:disabled {
-    -webkit-filter: grayscale(100%);
-    filter: grayscale(100%);
-}
-
 #levelUp {
     margin-top: 22px;
     background:url('Pfeil.svg') no-repeat;
