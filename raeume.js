@@ -1,8 +1,30 @@
+
 if (Meteor.isClient) {
 
-    //setTimeout(hideStart(), 500 );
+    //um Startdiv nach 2s auszublenden
+    Meteor.setTimeout(function(){hideStart()}, 2000);
+
+    // Ebenennummer
+    Session.setDefault("floor", 0);
+
+    //aktuelle Karte im iframe
+    var iframe = $('#frameContent');
+    if(Session.get("floor") == 0)
+        iframe.attr('src', 'Ebene0.svg');
+    else if(Session.get("floor") == -1)
+        iframe.attr('src', 'ebene-1.svg');
+    else if(Session.get("floor") == -2)
+        iframe.attr('src', 'ebene-2.svg');
 
 
+
+    //Navigationsbuttons auf Karte
+    var upBtn =  $('#levelUp');
+    var downBtn =  $('#levelDown');
+    upBtn.disabled = true;
+    downBtn.disabled = false;
+
+    //Interaktion mit der NaviLeiste
     Template.navi.events({
         'click div#roomBtn': function () {
             toggleMenuR();
@@ -11,18 +33,21 @@ if (Meteor.isClient) {
             toggleMenuF();
         }
     });
-
-    Template.content.events({
-       'mouseover iframe' : function() {
-           interactWithSVG();
-       }
+    Template.navi.helpers({
+        floor: function () {
+            return Session.get("floor");
+        }
     });
 
-  Template.start.events({
-      'mouseover div#start': function () {
-            hideStart();
+    //Interaktion mit dem Inhalt (SVG-Karten und Buttons)
+   Template.content.events({
+        'click div#levelDown' : function() {
+           changeSVG(Session.get("floor"), 1);
+       },
+       'click div#levelUp' : function() {
+           changeSVG(Session.get("floor"), 0);
        }
-   });
+    });
 
     if (Meteor.isServer) {
         Meteor.startup(function () {
@@ -33,6 +58,7 @@ if (Meteor.isClient) {
 
     //rollt Menu ein/aus
     function toggleMenuR() {
+
         var menuR = $('#menu').text();
         if (!$('menuR:contains("R&auml;ume")')){
             $('#menu').effect('slide', { direction: 'left', mode: 'show' });
@@ -42,6 +68,7 @@ if (Meteor.isClient) {
             $('#menu').effect('slide', { direction: 'right', mode: 'hide' });
     }
     function toggleMenuF() {
+        alert("hallo");
         var menuF = $('#menu').text();
         if (!"menuF:contains('Filter')") {
             $('#menu').effect('slide', { direction: 'left', mode: 'show' });
@@ -52,6 +79,7 @@ if (Meteor.isClient) {
       
     }
 
+
     //schließt Anfangsbild
     function hideStart(){
             $('#icon').fadeOut("slow");
@@ -61,11 +89,61 @@ if (Meteor.isClient) {
          // /   $('#start').delay(1000).fadeIn(250).delay(5000).fadeOut(250);
     }
 
-    //dafür wird das jQuery SVG benötigt --> hab ich für meteor noch nicht gefunden
+    //ändert Karte und Turm
+    // @param i: ist 1 bei down und 0 bei up
+    function changeSVG(f, i){
+        var tower = $('#tower');
+        var iframe = $('#frameContent');
+        if(i==1) {
+            if (f == 0) {
+                iframe.attr('src', 'ebene-1.svg');
+                //floor = -1
+                Session.set("floor", Session.get("floor") - 1);
+                upBtn.disabled =  downBtn.disabled = false;
+
+                tower.css('background', "url('stapel-1.svg') no-repeat");
+            } else if (f == -1) {
+                iframe.attr('src', 'ebene-2.svg');
+                //floor = -2
+                Session.set("floor", Session.get("floor") - 1);
+                upBtn.disabled = false;
+                downBtn.disabled = true;
+
+                tower.css('background', "url('stapel-2.svg') no-repeat");
+            }
+        }else{
+            if (f ==  -1) {
+                iframe.attr('src', 'Ebene0.svg');
+                //floor = 0
+                Session.set("floor", Session.get("floor") + 1);
+                upBtn.disabled = true;
+                downBtn.disabled = false;
+
+                tower.css('background', "url('stapel.svg') no-repeat");
+            } else if (f == -2) {
+                iframe.attr('src', 'ebene-1.svg');
+                //floor = -1
+                Session.set("floor", Session.get("floor") + 1);
+                upBtn.disabled = downBtn.disabled = false;
+
+                tower.css('background', "url('stapel-1.svg') no-repeat");
+            }
+        }
+
+    }
+   /* //dafür wird das jQuery SVG benötigt --> hab ich für meteor noch nicht gefunden
     function interactWithSVG() {
         var svg = $('#frameContent').svg('get');
         $("#backgroundcolor", svg.root()).bind('click', function () {
             alert('path clicked');
         });
-    }
+    }*/
+
+
+ //   var hammer = new Hammer(document.getElementById("filterBtn"));
+ //   hammer.onTap = function(ev) {
+ //       alert("ontap recognised");
+ //   };
+
+
 }

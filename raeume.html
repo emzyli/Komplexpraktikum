@@ -24,12 +24,12 @@
                     src="Ebene0.svg"  >
             </iframe><br />
             <div class="levelBtn" id="up">
-                 <a href="levelUp">
+                 <a href="#">
                      <div class="arrow" id="levelUp"></div>
                  </a>
             </div>
             <div class="levelBtn" id="down">
-                <a href="levelUp">
+                <a href="#">
                     <div class="arrow" id="levelDown"></div>
                 </a>
             </div>
@@ -69,7 +69,8 @@
 
         <div class="tower">
             <!--TODO: bei Wechsel der SVG die Zahl als Variable abändern-->
-            Ebene 0
+            <div id="tower"></div>
+            <label>Ebene {{floor}}</label>
         </div>
     </nav>
 </template>
