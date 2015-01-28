@@ -4,6 +4,7 @@
     <list default="true" id="24e17343-c929-4042-8835-92b611f11112" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Material/karten/ebene-2.svg" afterPath="$PROJECT_DIR$/Material/karten/ebene-2.svg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/raeume.css" afterPath="$PROJECT_DIR$/raeume.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Komplexpraktikum.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -51,8 +52,8 @@
       <file leaf-file-name="raeume.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/raeume.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4669653" vertical-offset="2915" max-vertical-offset="3808">
-              <caret line="196" column="0" selection-start-line="196" selection-start-column="0" selection-end-line="196" selection-end-column="0" />
+            <state vertical-scroll-proportion="1.1993281" vertical-offset="0" max-vertical-offset="3893">
+              <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -709,8 +710,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/raeume.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4669653" vertical-offset="2915" max-vertical-offset="3808">
-          <caret line="196" column="0" selection-start-line="196" selection-start-column="0" selection-end-line="196" selection-end-column="0" />
+        <state vertical-scroll-proportion="1.1993281" vertical-offset="0" max-vertical-offset="3893">
+          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
           <folding />
         </state>
       </provider>
