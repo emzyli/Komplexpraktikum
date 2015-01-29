@@ -4,7 +4,7 @@ Breite und Höhe sind am iPad getestet und stimmen so!
 Bei height:1536 gibts scollbalken, bei 1535 ist es nicht ganz ausgefüllt.
 **/
 
-a {
+a, a:visited {
    color: #4defff;
    text-decoration: none;
    cursor:pointer;
@@ -57,6 +57,7 @@ section div#content {
 #backBtn {
     background:url('icon_back.svg') no-repeat;
     background-size: 125px;
+    transform:scaleX(-1);
     margin-left: auto;
     margin-right: auto;
   /*  background-position: 10px -210px;*/
@@ -71,11 +72,14 @@ section div#content {
 }
 
 #filterBtn {
-    background:url('icon_filter.svg') no-repeat;
+    background: url('icon_filter.svg') no-repeat;
     background-size: 125px;
     margin-left: auto;
     margin-right: auto;
-    /*background-position: 10px -110px;*/
+
+}
+#Filter{
+    visibility: hidden;
 }
 
 #infoBtn {
@@ -83,7 +87,19 @@ section div#content {
     background-size: 125px;
     margin-left: auto;
     margin-right: auto;
-    /*background-position: 10px -110px;*/
+}
+#Info{
+    visibility: hidden;
+}
+
+#camBtn {
+    background:url('icon_kamera.svg') no-repeat;
+    background-size: 125px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#Bild{
+    visibility: hidden;
 }
 
 #backBtn:active {
@@ -109,6 +125,13 @@ section div#content {
 
 #infoBtn:active {
     background:url('icon_infoRot.svg') no-repeat;
+    background-size: 125px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#camBtn:active {
+    background:url('icon_kameraRot.svg') no-repeat;
     background-size: 125px;
     margin-left: auto;
     margin-right: auto;
@@ -158,6 +181,7 @@ section div#content {
     font-size: 36pt;
     font-weight: bold;
 
+    visibility: hidden;
 }
 
 #tower {
@@ -175,6 +199,7 @@ section div#content {
     text-align: center;
     background: #fff;
     opacity: 0.56;
+    visibility: hidden;
 }
 
 .levelBtn#up {
@@ -194,6 +219,7 @@ section div#content {
     height: 96px;
 }
 
+
 .arrow:disabled {
     -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
@@ -205,6 +231,8 @@ section div#content {
     background-size: 125px;
     margin-left: 45%;
     opacity: 1;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
 }
 
 #levelDown {
@@ -216,7 +244,3 @@ section div#content {
     opacity: 1;
 }
 
-/*.levelBtn#levelUp:disabled,
-.levelBtn#levelDown:disabled {
-
-}*/
