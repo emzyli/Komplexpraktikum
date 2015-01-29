@@ -95,9 +95,9 @@ section div#content {
 
 #roomBtn:active {
     background:url('icon_ortRot.svg') no-repeat;
-    background-size: 125px;
+    background-size: 100px;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: 80px;
 }
 
 #filterBtn:active {
