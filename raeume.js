@@ -27,10 +27,10 @@ if (Meteor.isClient) {
     //Interaktion mit der NaviLeiste
     Template.navi.events({
         'click div#roomBtn': function () {
-            toggleMenuR();
+           toggleMenuR();
         },
         'click div#filterBtn': function () {
-            toggleMenuF();
+           toggleMenuF();
         }
     });
     Template.navi.helpers({
@@ -58,32 +58,33 @@ if (Meteor.isClient) {
 
     //rollt Menu ein/aus
     function toggleMenuR() {
-
-        var menuR = $('#menu').text();
-        if (!$('menuR:contains("R&auml;ume")')){
-            $('#menu').effect('slide', { direction: 'left', mode: 'show' });
-            $('#menu').html('<p>R&auml;ume</p>');
-        }
-        else
-            $('#menu').effect('slide', { direction: 'right', mode: 'hide' });
+        toggleMenu("R&auml;ume");
     }
+
     function toggleMenuF() {
-        alert("hallo");
-        var menuF = $('#menu').text();
-        if (!"menuF:contains('Filter')") {
+        toggleMenu("Filter");      
+    }
+
+    //btnType: Raeume oder Filter
+    function toggleMenu(btnType) {
+        if ($('#menu:contains('+btnType+')').length <= 0) {
             $('#menu').effect('slide', { direction: 'left', mode: 'show' });
-            $('#menu').html('<p>Filter</p>');
+            $('#menu').html('<p>' + btnType + '</p>');
+            //verschiebe den roten Balken
+            $('nav').css('border', 'none');
         }
-        else
+        else {
             $('#menu').effect('slide', { direction: 'right', mode: 'hide' });
-      
+            //roten Balken wieder zeigen
+            $('nav').css('border-right', '5px solid #cc0000');
+        }
     }
 
 
     //schließt Anfangsbild
     function hideStart(){
             $('#icon').fadeOut("slow");
-            $('#start').fadeOut("slow");
+            $('#start').effect('slide', { direction: 'right', mode: 'hide' });
             $('#content').css('visibility','visible').hide().fadeIn('slow');//.css('visibility', 'visible');
             $('nav').css('visibility','visible').hide().fadeIn('slow');
          // /   $('#start').delay(1000).fadeIn(250).delay(5000).fadeOut(250);

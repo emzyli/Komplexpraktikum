@@ -126,7 +126,7 @@ section div#content {
     opacity: 0.8;
     height: 1535px;
     width: 440px;
-    margin-left: 220px;
+    margin-left: 320px;
     display: none;
     position: absolute;
     border-right: 5px solid #cc0000;
@@ -143,8 +143,7 @@ section div#content {
     background-color: #cc0000;
 }
 
-#icon{
-    align-self: center;
+#icon{    
     vertical-align: middle;
 }
 

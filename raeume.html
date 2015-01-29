@@ -5,8 +5,8 @@
 
 <body>
   {{> start}}
-  {{> navi}}
   {{> content}}
+  {{> navi}}
 </body>
 
 <template name="start">
@@ -16,7 +16,7 @@
 </template>
 
 <template name="content">
-    <section >
+    <section>
         <div id="content">
             <iframe
                     id="frameContent"
@@ -38,6 +38,7 @@
 </template>
 
 <template name="navi">
+    <div id="menu"></div>
     <nav>
         <div class="buttonPosition" id="first">
             <!--temporaere Referenz-->
@@ -53,11 +54,11 @@
             </a>
         </div>
         <div class="buttonPosition" >
-        <a href="#">
-            <div class="button" id="filterBtn"></div>
-            <label>Filter</label><br />
-        </a>
-    </div>
+            <a href="#">
+                <div class="button" id="filterBtn"></div>
+                <label>Filter</label><br />
+            </a>
+        </div>
         <div class="buttonPosition" >
             <a href="#">
                 <div class="button" id="infoBtn"></div>
@@ -72,6 +73,6 @@
             <div id="tower"></div>
             <label>Ebene {{floor}}</label>
         </div>
-    </nav>
+    </nav>    
 </template>
 
