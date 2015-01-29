@@ -120,7 +120,9 @@ if (Meteor.isClient) {
     function changeSVG(f, i, p){
         var tower = $('#tower');
         var upBtn =  $('#levelUp');
+        var up =  $('#up');
         var downBtn =  $('#levelDown');
+        var down =  $('#down');
         var iframe = $('#frameContent');
         var buttons = $('.levelBtn');
         if(i==1) {
@@ -132,8 +134,8 @@ if (Meteor.isClient) {
 
                 tower.css('background', "url('stapel-1.svg') no-repeat");
                 tower.css('background-size', "111px");
-                upBtn.css('-webkit-filter', 'grayscale(0%)');
-                downBtn.css('-webkit-filter', 'grayscale(0%)');
+                up.css('-webkit-filter', 'grayscale(0%)');
+                down.css('-webkit-filter', 'grayscale(0%)');
             } else if (f == -1) {
                 iframe.attr('src', 'ebene-2.svg');
                 //floor = -2
@@ -143,8 +145,8 @@ if (Meteor.isClient) {
 
                 tower.css('background', "url('stapel-2.svg') no-repeat");
                 tower.css('background-size', "111px");
-                upBtn.css('-webkit-filter', 'grayscale(0%)');
-                downBtn.css('-webkit-filter', 'grayscale(100%)');
+                up.css('-webkit-filter', 'grayscale(0%)');
+                down.css('-webkit-filter', 'grayscale(100%)');
             }
         }else if(i==0){
             if (f ==  -1) {
@@ -156,7 +158,7 @@ if (Meteor.isClient) {
 
                 tower.css('background', "url('stapel.svg') no-repeat");
                 tower.css('background-size', "111px");
-                upBtn.css('-webkit-filter', 'grayscale(100%)');
+                up.css('-webkit-filter', 'grayscale(100%)');
                 downBtn.css('-webkit-filter', 'grayscale(0%)');
 
             } else if (f == -2) {
@@ -167,8 +169,8 @@ if (Meteor.isClient) {
 
                 tower.css('background', "url('stapel-1.svg') no-repeat");
                 tower.css('background-size', "111px");
-                upBtn.css('-webkit-filter', 'grayscale(0%)');
-                downBtn.css('-webkit-filter', 'grayscale(0%)');
+                up.css('-webkit-filter', 'grayscale(0%)');
+                down.css('-webkit-filter', 'grayscale(0%)');
             }
         }else{
             if (p){

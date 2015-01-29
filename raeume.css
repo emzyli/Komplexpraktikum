@@ -198,17 +198,17 @@ section div#content {
     height:96px;
     text-align: center;
     background: #fff;
-    opacity: 0.56;
+    opacity: 0.7;
     visibility: hidden;
 }
 
-.levelBtn#up {
+.levelBtn#levelUp {
     position: absolute;
     top: 0px;
     border-bottom: 1px solid #666;
 }
 
-.levelBtn#down {
+.levelBtn#levelDown {
     position: absolute;
     bottom: 0px;
     border-top: 1px solid #666;
@@ -225,7 +225,7 @@ section div#content {
     filter: grayscale(100%);
 }
 
-#levelUp {
+#up {
     margin-top: 22px;
     background:url('Pfeil.svg') no-repeat;
     background-size: 125px;
@@ -235,7 +235,7 @@ section div#content {
     filter: grayscale(100%);
 }
 
-#levelDown {
+#down {
     margin-top: -22px;
     background:url('Pfeil.svg') no-repeat;
     transform:rotate(180deg);
