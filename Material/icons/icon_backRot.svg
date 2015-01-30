@@ -22,10 +22,10 @@
 		c0,11.705,9.782,21.196,21.851,21.196V86.578"/>
 </g>
 <g>
-	<path fill="none" stroke="#E52520" stroke-width="3" stroke-miterlimit="10" d="M45.408,25.013c0-5.21,1.179-12.663-2.021-16.292
+	<path fill="none" stroke="#CC0000" stroke-width="3" stroke-miterlimit="10" d="M45.408,25.013c0-5.21,1.179-12.663-2.021-16.292
 		c-3.793-4.302-12.474-4.326-18.672-4.326c-11.425,0-20.69,9.231-20.69,20.618s9.266,20.618,20.69,20.618
 		C36.144,45.631,45.408,36.399,45.408,25.013z"/>
-	<polyline fill="none" stroke="#E52520" stroke-width="3" stroke-miterlimit="10" points="28.104,17.659 21.617,24.58 
+	<polyline fill="none" stroke="#CC0000" stroke-width="3" stroke-miterlimit="10" points="28.104,17.659 21.617,24.58 
 		27.961,31.213 	"/>
 </g>
 <g>

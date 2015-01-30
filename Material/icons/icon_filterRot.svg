@@ -4,12 +4,12 @@
 <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
 <g>
-	<path fill="none" stroke="#E52520" stroke-width="3" stroke-miterlimit="10" d="M43.452-19.437H4.167v-32.901h38.616
+	<path fill="none" stroke="#CC0000" stroke-width="3" stroke-miterlimit="10" d="M43.452-19.437H4.167v-32.901h38.616
 		c0,0,2.232-0.215,4.241,1.282c2.01,1.495,2.01,4.272,2.01,4.272v19.869"/>
-	<path fill="none" stroke="#E52520" stroke-width="3" stroke-miterlimit="10" d="M36.962-35.779c0,5.774-4.642,10.456-10.362,10.456
+	<path fill="none" stroke="#CC0000" stroke-width="3" stroke-miterlimit="10" d="M36.962-35.779c0,5.774-4.642,10.456-10.362,10.456
 		c-5.721,0-10.363-4.682-10.363-10.456c0-5.774,4.642-10.455,10.363-10.455C32.32-46.234,36.962-41.553,36.962-35.779z"/>
 </g>
-<path fill="none" stroke="#E52520" stroke-width="3" stroke-linecap="round" stroke-miterlimit="10" d="M26.394,46.799l2.807-20.466
+<path fill="none" stroke="#CC0000" stroke-width="3" stroke-linecap="round" stroke-miterlimit="10" d="M26.394,46.799l2.807-20.466
 	c0,0,0.586-1.872,0.819-2.223c0.233-0.353,1.052-1.171,1.052-1.171l12.63-9.707c0,0,2.692-2.689,2.924-3.86
 	c0.415-2.077-1.521-4.795-3.858-4.795H6.979c0,0-4.092,0.584-3.977,4.094c0.117,3.508,2.925,5.615,2.925,5.615l12.28,8.887
 	c0,0,1.149,1.204,1.519,3.16c0.47,2.453,0.704,5.612,0.704,5.612"/>
@@ -21,10 +21,10 @@
 		c0,11.705,9.782,21.196,21.851,21.196V26.184"/>
 </g>
 <g>
-	<path fill="none" stroke="#E52520" stroke-width="3" stroke-miterlimit="10" d="M115.333-35.382c0-5.21,1.179-12.663-2.021-16.292
+	<path fill="none" stroke="#CC0000" stroke-width="3" stroke-miterlimit="10" d="M115.333-35.382c0-5.21,1.179-12.663-2.021-16.292
 		C109.52-55.976,100.839-56,94.641-56c-11.425,0-20.69,9.231-20.69,20.618s9.266,20.618,20.69,20.618
 		C106.068-14.764,115.333-23.995,115.333-35.382z"/>
-	<polyline fill="none" stroke="#E52520" stroke-width="3" stroke-miterlimit="10" points="98.029,-42.735 91.542,-35.814 
+	<polyline fill="none" stroke="#CC0000" stroke-width="3" stroke-miterlimit="10" points="98.029,-42.735 91.542,-35.814 
 		97.886,-29.182 	"/>
 </g>
 <g>
