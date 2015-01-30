@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<files>
+  <file>
+    <id>7</id>
+    <filename>2004_0420Image0003.JPG</filename>
+    <filepath>http://upload.wikimedia.org/wikipedia/commons/1/1a/2004_0420Image0003.JPG</filepath>
+    <creation_date>14.02.2011-12:50</creation_date>
+    <filetype>jpeg</filetype>
+  </file>
+  <file>
+    <id>4</id>
+    <filename>800px-Allrad_autom_no.jpg</filename>
+    <filepath>http://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Allrad_autom_no.jpg/800px-Allrad_autom_no.jpg</filepath>
+    <creation_date>02.03.2007-10:03</creation_date>
+    <filetype>jpeg</filetype>
+  </file>
+  <file>
+    <id>93</id>
+    <filename>test.txt</filename>
+    <filepath>die/ressource/fehlt/test.txt</filepath>
+    <creation_date>09.09.2009-09:09</creation_date>
+    <filetype>txt</filetype>
+  </file>
+  <file>
+    <id>75</id>
+    <filename>musik.mp3</filename>
+    <filepath>https://www.google.de/#q=musik.mp3/</filepath>
+    <creation_date>01.02.2013-14:15</creation_date>
+    <filetype>mp3</filetype>
+  </file>
+</files>
