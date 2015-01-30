@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<entry>
+	<heading>
+		<text>Ebene 0</text>
+	</heading>
+	<eintrag>
+		<text>Raum 0.40</text>
+	</eintrag>
+	<eintrag>
+		<text>Raum 0.41</text>
+	</eintrag>
+	<eintrag>
+		<text>Raum 0.42</text>
+	</eintrag>
+	<eintrag>
+		<text>Raum 0.43</text>
+	</eintrag>
+	<eintrag>
+		<text>Raum 0.46</text>
+	</eintrag>
+	<eintrag>
+		<text>Raum 0.47</text>
+	</eintrag>
+	<eintrag>
+		<text>Raum 0.66</text>
+	</eintrag>
+</entry>
+<entry>
+	<heading>
+		<text>Ebene -1</text>
+	</heading>
+	<eintrag>
+		<text>Raum -1.116</text>
+	</eintrag>
+</entry>
+<entry>
+	<heading>
+	<text>Ebene -2</text>
+	</heading>
+	<eintrag>
+		<text>Raum -2.115</text>
+	</eintrag>
+</entry>
