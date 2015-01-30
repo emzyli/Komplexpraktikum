@@ -38,7 +38,24 @@
 </template>
 
 <template name="navi">
-    <div id="menu"></div>
+    <div id="menu">
+        <ul id="menuList">
+           <li class="heading">Kapazit&auml;t</li>
+           <li class="menuel">
+               <input id="noPers" type="number" max="20" min="2" />
+               <label for="noPers" text="Personen">Personen</label>
+           </li>
+           <li class="heading">Ausstattung</li>
+           <li class="menuel">
+               <input id="bea" type="checkbox" />
+               <label for="bea" text="Beamer">Beamer</label>
+            </li>
+            <li class="menuel">
+               <input id="pc" type="checkbox" />
+               <label for="pc" text="Computer">Computer</label>
+           </li>
+        </ul>
+    </div>
     <nav>
         <div class="buttonPosition" id="first">
             <!--temporaere Referenz-->

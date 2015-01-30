@@ -9,7 +9,9 @@ a, a:visited {
    text-decoration: none;
    cursor:pointer;
 }
-
+a:active{
+    color: #c00;
+}
 nav {
     visibility: hidden;
     height: 1534px;
@@ -146,13 +148,34 @@ section div#content {
     float: right;
     color: black;
     background-color: white;
-    opacity: 0.8;
+    opacity: 0.9;
     height: 1535px;
     width: 440px;
     margin-left: 320px;
     display: none;
     position: absolute;
     border-right: 5px solid #cc0000;
+}
+
+#menuList{
+    list-style-type: none;
+    font-size: 20pt;
+}
+
+.menuel {
+    height: 120px;
+    opacity: 1;
+}
+.menuel:nth-child(odd){
+    background-color:#000;
+}
+.menuel:nth-child(even){
+    background-color:#fff;
+}
+.heading{
+    height: 45px;
+    opacity: 0.5;
+    font-size: 16pt;
 }
 
 #frameContent {
@@ -244,3 +267,10 @@ section div#content {
     opacity: 1;
 }
 
+/*checkboxen*/
+#bea, #pc{
+    -ms-transform: scale(4); /* IE */
+    -moz-transform: scale(4); /* FF */
+    -webkit-transform: scale(4); /* Safari and Chrome */
+    -o-transform: scale(4); /* Opera */
+}

@@ -21,18 +21,18 @@ if (Meteor.isClient) {
     Template.navi.events({
         'click div#backBtn': function () {
             changeSVG(0, 2, Session.get("position"));
-            toggleMenu(" ", 0);
+            toggleMenu(0);
         },
         'click div#roomBtn': function () {
             if(Session.get("position"))
-                toggleMenu("ort", 1);
-            else  toggleMenu("ort", 2);
+                toggleMenu("ort");
+            else  toggleMenu("ort");
         },
         'click div#filterBtn': function () {
-            toggleMenu("filter", 3);
+            toggleMenu("filter");
         },
         'click div#infoBtn': function () {
-            toggleMenu("info", 4);
+            toggleMenu("info");
         }
     });
     Template.navi.helpers({
@@ -72,18 +72,31 @@ if (Meteor.isClient) {
         });
     }
 
+
     //btnType: Raeume oder Filter
-    function toggleMenu(btnType, menueId) {
-        if (Session.get("toggled")!=menueId && menueId>0) {
-            Session.set("toggled", menueId);
+    function toggleMenu(btnType) {
+        if (Session.get("toggled")!=btnType && btnType!=0) {
+            //verändere zuletzt geklickten Button
+            $('#'+Session.get("toggled")+ ' a div').css('background', "url('icon_"+Session.get("toggled")+".svg') no-repeat");
+            $('#'+Session.get("toggled")+ ' a div').css('background-size', "125px");
+            $('#'+Session.get("toggled") + ' a label').css('color', '#4defff');
+            Session.set("toggled", btnType);
+            //öffne menü
             $('#menu').effect('slide', { direction: 'left', mode: 'show' });
-            $('#menu').html('<p>' + btnType + '</p>');
+         //   $('#menu').html('<p>' + btnType + '</p>');
+            toggleMenuContent(btnType);
             //verschiebe den roten Balken
             $('nav').css('border', 'none');
+            //ändere den Button
             $('#'+btnType + ' a div').css('background', "url('icon_"+btnType+"Rot.svg') no-repeat");
             $('#'+btnType + ' a div').css('background-size', "125px");
+            //ändere Label
+            $('#'+btnType + ' a label').css('color', '#c00');
         }
         else {
+            $('#'+Session.get("toggled")+ ' a div').css('background', "url('icon_"+Session.get("toggled")+".svg') no-repeat");
+            $('#'+Session.get("toggled")+ ' a div').css('background-size', "125px");
+            $('#'+Session.get("toggled") + ' a label').css('color', '#4defff');
             Session.set("toggled", 0);
             $('#menu').effect('slide', { direction: 'left', mode: 'hide' });
             //roten Balken wieder zeigen
@@ -92,7 +105,19 @@ if (Meteor.isClient) {
             $('#'+btnType + ' a div').css('background-size', "125px");
         }
     }
+    function toggleMenuContent() {
+        //toDo: hole XML (ausser Filter: hardcoded)
+        if (btnType != 'filter') {
+            xmlFile;
+            //lösche alle momentanen Elemente der Liste
+            $('#menuList').empty();
+            var list = $('#menuList');
+            //hole Hauptueberschriften
+            var entries = xmlFile.getElementsByTagName('entry');
 
+
+        }
+    }
 
     //schließt Anfangsbild
     function hideStart(){
