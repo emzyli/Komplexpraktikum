@@ -15,9 +15,7 @@ a:active{
 nav {
     visibility: hidden;
     height: 1534px;
-    /* height: 100%;*/
     width: 320px;
-    /*width: 14%;*/
     background: -webkit-gradient(linear, left top, right top,
         color-stop(0%,rgba(0,0,0,0.61)),
         color-stop(99%,rgba(0,0,0,0.83)),
@@ -147,8 +145,7 @@ section div#content {
 #menu {
     float: right;
     color: black;
-    background-color: white;
-    opacity: 0.9;
+    background: rgba(102, 102, 102, 0.5);
     height: 1535px;
     width: 440px;
     margin-left: 320px;
@@ -159,23 +156,28 @@ section div#content {
 
 #menuList{
     list-style-type: none;
-    font-size: 20pt;
+    font-size: 24pt;
+    margin-left: 0px;
+    padding-left: 0px;
 }
 
 .menuel {
     height: 120px;
-    opacity: 1;
+    padding-left: 60px;
+    padding-top: 40px;
 }
 .menuel:nth-child(odd){
-    background-color:#000;
+    background: rgba(102, 102, 102, 0.4);
 }
 .menuel:nth-child(even){
-    background-color:#fff;
+    background: rgba(255, 255, 2550, 0.9);
 }
 .heading{
     height: 45px;
-    opacity: 0.5;
-    font-size: 16pt;
+    font-size: 24pt;
+    padding-left: 10px;
+    padding-top: 2px;
+    background: rgba(102, 102, 102, 0.6);
 }
 
 #frameContent {
@@ -273,4 +275,10 @@ section div#content {
     -moz-transform: scale(4); /* FF */
     -webkit-transform: scale(4); /* Safari and Chrome */
     -o-transform: scale(4); /* Opera */
+    margin-right: 45px;
+    margin-left: 31px;
+}
+#noPers{
+    margin-right: 10px;
+    width: 78px;
 }
