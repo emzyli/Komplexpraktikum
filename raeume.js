@@ -7,6 +7,8 @@ if (Meteor.isClient) {
     // Ebenennummer
     Session.setDefault("floor", 0);
     Session.setDefault("position", 0);
+    //Ausklappmenue nicht ausgerollt
+    Session.setDefault("toggled", 0);
 
     //Navigationsbuttons auf Karte
     var upBtn =  $('#levelUp');
@@ -19,12 +21,18 @@ if (Meteor.isClient) {
     Template.navi.events({
         'click div#backBtn': function () {
             changeSVG(0, 2, Session.get("position"));
+            toggleMenu(" ", 0);
         },
         'click div#roomBtn': function () {
-           toggleMenuR();
+            if(Session.get("position"))
+                toggleMenu("ort", 1);
+            else  toggleMenu("ort", 2);
         },
         'click div#filterBtn': function () {
-           toggleMenuF();
+            toggleMenu("filter", 3);
+        },
+        'click div#infoBtn': function () {
+            toggleMenu("info", 4);
         }
     });
     Template.navi.helpers({
@@ -64,27 +72,24 @@ if (Meteor.isClient) {
         });
     }
 
-    //rollt Menu ein/aus
-    function toggleMenuR() {
-        toggleMenu("R&auml;ume");
-    }
-
-    function toggleMenuF() {
-        toggleMenu("Filter");      
-    }
-
     //btnType: Raeume oder Filter
-    function toggleMenu(btnType) {
-        if ($('#menu:contains('+btnType+')').length <= 0) {
+    function toggleMenu(btnType, menueId) {
+        if (Session.get("toggled")!=menueId && menueId>0) {
+            Session.set("toggled", menueId);
             $('#menu').effect('slide', { direction: 'left', mode: 'show' });
             $('#menu').html('<p>' + btnType + '</p>');
             //verschiebe den roten Balken
             $('nav').css('border', 'none');
+            $('#'+btnType + ' a div').css('background', "url('icon_"+btnType+"Rot.svg') no-repeat");
+            $('#'+btnType + ' a div').css('background-size', "125px");
         }
         else {
-            $('#menu').effect('slide', { direction: 'right', mode: 'hide' });
+            Session.set("toggled", 0);
+            $('#menu').effect('slide', { direction: 'left', mode: 'hide' });
             //roten Balken wieder zeigen
             $('nav').css('border-right', '5px solid #cc0000');
+            $('#'+btnType + ' a div').css('background', "url('icon_"+btnType+".svg') no-repeat");
+            $('#'+btnType + ' a div').css('background-size', "125px");
         }
     }
 
@@ -103,13 +108,13 @@ if (Meteor.isClient) {
     function changeBtns(p){
         if(p) {
             $('#backBtn').css('transform', 'scaleX(1)');
-            $('#Filter').css('visibility', 'visible');
-            $('#Info').css('visibility', 'visible');
+            $('#filter').css('visibility', 'visible');
+            $('#info').css('visibility', 'visible');
             $('.tower').css('visibility', 'visible');
         }else{
             $('#backBtn').css('transform', 'scaleX(-1)');
-            $('#Filter').css('visibility', 'hidden');
-            $('#Info').css('visibility', 'hidden');
+            $('#filter').css('visibility', 'hidden');
+            $('#info').css('visibility', 'hidden');
             $('.tower').css('visibility', 'hidden');
         }
     }
@@ -186,19 +191,6 @@ if (Meteor.isClient) {
 
     }
 
-   /* //dafür wird das jQuery SVG benötigt --> hab ich für meteor noch nicht gefunden
-    function interactWithSVG() {
-        var svg = $('#frameContent').svg('get');
-        $("#backgroundcolor", svg.root()).bind('click', function () {
-            alert('path clicked');
-        });
-    }*/
-
-
- //   var hammer = new Hammer(document.getElementById("filterBtn"));
- //   hammer.onTap = function(ev) {
- //       alert("ontap recognised");
- //   };
 
 
 }
