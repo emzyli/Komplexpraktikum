@@ -105,18 +105,48 @@ if (Meteor.isClient) {
             $('#'+btnType + ' a div').css('background-size', "125px");
         }
     }
-    function toggleMenuContent() {
+
+    //fuegt den Tabellen-Inhalt ein
+    function toggleMenuContent(btnType) {
         //toDo: hole XML (ausser Filter: hardcoded)
         if (btnType != 'filter') {
-            xmlFile;
+            if (!Session.get("position")) {
+                //teste ob Campus oder Slub-Ansicht
+                btnType = 'bibos'
+            }
+            xmlFile = getXML(btnType+'.xml');
             //lösche alle momentanen Elemente der Liste
             $('#menuList').empty();
             var list = $('#menuList');
-            //hole Hauptueberschriften
             var entries = xmlFile.getElementsByTagName('entry');
 
+            //fuer jeden Eintrag Listelemente einfuegen
+            for (var i = 0; i < entries.length; i++) {
+                //eine Heading
+                liH = $('<li>').addClass('heading');
+                li.html(entries[i].childNodes[0].nodeValue);
+                list.append(liH);
 
+                //gehe alle Elemente nach Heading durch
+                for (var j = 0; j < entries[i].childNodes.length; j++) {
+                    liE = $('<li>').addClass('menuel');
+                    li.html(entries[i].childNodes[j].nodeValue);
+                    list.append(liE);
+                }
+            }
         }
+    }
+
+    //gibt das XML fuer den jeweiligen geklickten Button zurueck
+   function getXML(btnType) {
+       $.ajax({
+           url: btnType,
+           data: '',
+           dataType: 'xml',
+           success: function (data) {
+               return data.getElementsByTagName('item').length;
+           }
+       })
     }
 
     //schließt Anfangsbild
