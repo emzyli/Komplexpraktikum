@@ -4,25 +4,25 @@
 	<heading>
 		<text>Dresden</text>
 	</heading>
-	<zweig>
-		<name>Zentralbibilothek</name>
-	</zweig>
-	<zweig>
+	<eintrag>
+		<name>Zentralbibliothek</name>
+	</eintrag>
+	<eintrag>
 		<name>Erziehungswissenschaften</name>
-	</zweig>
-	<zweig>
+	</eintrag>
+	<eintrag>
 		<name>Rechtswissenschaften</name>
-	</zweig>
-	<zweig>
+	</eintrag>
+	<eintrag>
 		<name>Medizin</name>
-	</zweig>
+	</eintrag>
 </entry>
 <entry>
-	<heading>
+	<eintrag>
 		<text>Tharandt</text>
-	</heading>
-	<zweig>
+	</eintrag>
+	<eintrag>
 		<name>Forstwesen</name>
-	</zweig>
+	</eintrag>
 </entry>
 </bibos>

@@ -105,48 +105,49 @@ if (Meteor.isClient) {
             $('#'+btnType + ' a div').css('background-size', "125px");
         }
     }
-
-    //fuegt den Tabellen-Inhalt ein
     function toggleMenuContent(btnType) {
-        //toDo: hole XML (ausser Filter: hardcoded)
         if (btnType != 'filter') {
             if (!Session.get("position")) {
                 //teste ob Campus oder Slub-Ansicht
                 btnType = 'bibos'
             }
-            xmlFile = getXML(btnType+'.xml');
+            //hole xml-Daten
+            var xmlFile;
+            $.get(btnType + '.xml', function (data) { xmlFile = data });
+
             //lösche alle momentanen Elemente der Liste
             $('#menuList').empty();
             var list = $('#menuList');
             var entries = xmlFile.getElementsByTagName('entry');
+            var headings = xmlFile.getElementsByTagName('heading');
+            var eintraege = xmlFile.getElementsByTagName('eintrag');
 
-            //fuer jeden Eintrag Listelemente einfuegen
-            for (var i = 0; i < entries.length; i++) {
-                //eine Heading
-                liH = $('<li>').addClass('heading');
-                li.html(entries[i].childNodes[0].nodeValue);
-                list.append(liH);
-
-                //gehe alle Elemente nach Heading durch
-                for (var j = 0; j < entries[i].childNodes.length; j++) {
-                    liE = $('<li>').addClass('menuel');
-                    li.html(entries[i].childNodes[j].nodeValue);
-                    list.append(liE);
+            //fuer jeden Entry Listelemente einfuegen
+            //entry<heading(*), eintrag(*)>            
+            entries.each(function () {
+                //heading falls vorhanden
+                if ($(this).find('heading')) {
+                    liH = $('<li>').addClass('heading');
+                    liH.html($(this).find('heading').text());
+                    list.append(liH);
                 }
-            }
+                //id falls vorhanden
+                if ($(this).find('id')) {
+                    liH = $('<li>').addClass('menuel');
+                    liH.html($(this).find('id').text());
+                    list.append(liH);
+                }
+                //eintraege falls vorhanden
+                if ($(this).find('eintrag')) {
+                    liEList = $(this).find('eintrag');
+                    liEList.each(function () {
+                        liE = $('<li>').addClass('menuel');
+                        liE.html($(this).text());
+                        list.append(liE);
+                    });
+                }
+            });
         }
-    }
-
-    //gibt das XML fuer den jeweiligen geklickten Button zurueck
-   function getXML(btnType) {
-       $.ajax({
-           url: btnType,
-           data: '',
-           dataType: 'xml',
-           success: function (data) {
-               return data.getElementsByTagName('item').length;
-           }
-       })
     }
 
     //schließt Anfangsbild
