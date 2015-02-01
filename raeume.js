@@ -13,9 +13,9 @@ if (Meteor.isClient) {
     //Navigationsbuttons auf Karte
     var upBtn =  $('#levelUp');
     upBtn.disabled = true;
-   /*    var downBtn =  $('#levelDown');
-
-    downBtn.disabled = false;*/
+    /*    var downBtn =  $('#levelDown');
+ 
+     downBtn.disabled = false;*/
 
     //Interaktion mit der NaviLeiste
     Template.navi.events({
@@ -56,23 +56,16 @@ if (Meteor.isClient) {
     });
 
     //Interaktion mit dem Inhalt (SVG-Karten und Buttons)
-   Template.content.events({
+    Template.content.events({
         'click div#levelDown' : function() {
-           changeSVG(Session.get("floor"), 1, 1);
-       },
-       'click div#levelUp' : function() {
-           changeSVG(Session.get("floor"), 0, 1);
-       }
-    });
+            changeSVG(Session.get("floor"), 1, 1);
+        },
+        'click div#levelUp' : function() {
+            changeSVG(Session.get("floor"), 0, 1);
+        }
+    });    
 
-    if (Meteor.isServer) {
-        Meteor.startup(function () {
-            // code to run on server at startup
-
-        });
-    }
-
-
+}
     //btnType: Raeume oder Filter
     function toggleMenu(btnType) {
         if (Session.get("toggled")!=btnType && btnType!=0) {
@@ -106,21 +99,23 @@ if (Meteor.isClient) {
         }
     }
     function toggleMenuContent(btnType) {
+
+        //lösche alle momentanen Elemente der Liste
+        $('#menuList').empty();
+        var list = $('#menuList');
+
+        if (btnType == 'filter') toggleMenuFilter(list);
         if (btnType != 'filter') {
             if (!Session.get("position")) {
                 //teste ob Campus oder Slub-Ansicht
                 btnType = 'bibos'
             }
+
             //hole xml-Daten
             var xmlFile;
-            $.get(btnType + '.xml', function (data) { xmlFile = data });
+            $.get('info.xml', function (data) { xmlFile = data; });
 
-            //lösche alle momentanen Elemente der Liste
-            $('#menuList').empty();
-            var list = $('#menuList');
-            var entries = xmlFile.getElementsByTagName('entry');
-            var headings = xmlFile.getElementsByTagName('heading');
-            var eintraege = xmlFile.getElementsByTagName('eintrag');
+            var entries = xmlFile.getElementsByTagName('raum');
 
             //fuer jeden Entry Listelemente einfuegen
             //entry<heading(*), eintrag(*)>            
@@ -148,6 +143,46 @@ if (Meteor.isClient) {
                 }
             });
         }
+    }
+
+    function toggleMenuFilter(list) {
+        liH1 = $('<li>').addClass('heading');
+        liH2 = $('<li>').addClass('heading');
+        liH4 = $('<li>').addClass('heading');
+        li1 = $('<li>').addClass('menuel');
+        li2 = $('<li>').addClass('menuel');
+        li3 = $('<li>').addClass('menuel');
+        li4 = $('<li>').addClass('menuel');
+
+        liH1.html('Kapazit&auml;t');
+        liH2.html('Ausstattung');
+        liH4.html('Zusatz');
+
+        inp1 = $("<input type=\"number\" id=\"noPers\" min=\"20\" max=\"20\" />");
+        lb1 = $("<label for=\"noPers\">").text('Personen');
+        inp2 = $("<input type=\"checkbox\" class=\"checkb\" id=\"bea\" />");
+        lb2 = $("<label for=\"bea\">").text('Beamer');
+        inp3 = $("<input type=\"checkbox\" class=\"checkb\" id=\"pc\" />");
+        lb3 = $("<label for=\"pc\">").text('Computer');
+        inp4 = $("<input type=\"checkbox\" class=\"checkb\" id=\"teilen\" />");
+        lb4 = $("<label for=\"teilen\">").text('Raum teilen');
+
+        li1.append(inp1);
+        li1.append(lb1);
+        li2.append(inp2)
+        li2.append(lb2);
+        li3.append(inp3)
+        li3.append(lb3);
+        li4.append(inp4);
+        li4.append(lb4);
+
+        list.append(liH1);
+        list.append(li1);
+        list.append(liH2);
+        list.append(li2);
+        list.append(li3);
+        list.append(liH4);
+        list.append(li4);
     }
 
     //schließt Anfangsbild
@@ -248,5 +283,10 @@ if (Meteor.isClient) {
     }
 
 
+if (Meteor.isServer) {
+    Meteor.startup(function () {
+        // code to run on server at startup
 
+    });
 }
+

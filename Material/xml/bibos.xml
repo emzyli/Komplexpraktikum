@@ -1,28 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <bibos>
 <entry>
-	<heading>
-		<text>Dresden</text>
-	</heading>
-	<eintrag>
-		<name>Zentralbibliothek</name>
-	</eintrag>
-	<eintrag>
-		<name>Erziehungswissenschaften</name>
-	</eintrag>
-	<eintrag>
-		<name>Rechtswissenschaften</name>
-	</eintrag>
-	<eintrag>
-		<name>Medizin</name>
-	</eintrag>
+	<heading>Dresden</heading>
+	<eintrag>Zentralbibliothek</eintrag>
+	<eintrag>Erziehungswissenschaften</eintrag>
+	<eintrag>Rechtswissenschaften</eintrag>
+	<eintrag>Medizin</eintrag>
 </entry>
 <entry>
-	<eintrag>
-		<text>Tharandt</text>
-	</eintrag>
-	<eintrag>
-		<name>Forstwesen</name>
-	</eintrag>
+	<heading></heading>
+	<eintrag>Tharandt</eintrag>
+	<eintrag>Forstwesen</eintrag>
 </entry>
 </bibos>

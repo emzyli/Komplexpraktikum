@@ -270,7 +270,7 @@ section div#content {
 }
 
 /*checkboxen*/
-#bea, #pc{
+.checkb[type='checkbox']{
     -ms-transform: scale(4); /* IE */
     -moz-transform: scale(4); /* FF */
     -webkit-transform: scale(4); /* Safari and Chrome */
