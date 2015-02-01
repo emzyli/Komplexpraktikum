@@ -18,11 +18,7 @@
 <template name="content">
     <section>
         <div id="content">
-            <iframe
-                    id="frameContent"
-                    scrolling="yes" marginheight="0" marginwidth="0" zoom
-                    src="map1.svg"  >
-            </iframe><br />
+            <div id="frameContent" ></div><br />
             <a href="#">
                  <div class="levelBtn" id="levelUp">
                      <div class="arrow" id="up"></div>
@@ -33,7 +29,12 @@
                     <div class="arrow" id="down"></div>
                 </div>
             </a>
+            <div id="zoomBar">
+                <a id="in" class="zoomBarEl">+</a><br />
+                <a id="out" class="zoomBarEl">-</a>
+            </div>
         </div>
+        
     </section>
 </template>
 
