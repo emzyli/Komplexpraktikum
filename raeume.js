@@ -32,6 +32,14 @@ if (Meteor.isClient) {
  
      downBtn.disabled = false;*/
 
+    Template.maphome.rendered = function() {
+        var mapHome = L.map('map-home', 'map1.svg');
+        mapHome.setView([30.28, -97.73], 13);
+
+        var OpenStreetMap_Mapnik = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+        })
+    };
     //Interaktion mit der NaviLeiste
     Template.navi.events({
         'click div#first': function () {
@@ -257,5 +265,9 @@ if (Meteor.isServer) {
         // code to run on server at startup
 
     });
+    Meteor.onload = function () {
+        L.mapbox.accessToken = 'pk.eyJ1IjoiYWxleG5ldHNjaCIsImEiOiJsX0V6Wl9NIn0.i14NX5hv3bkVIi075nOM2g';
+        var map = L.mapbox.map('frameContent', 'map1.svg') .setView([40, -74.50], 9);;
+    };
 }
 

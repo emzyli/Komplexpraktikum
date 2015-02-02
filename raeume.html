@@ -9,16 +9,25 @@
   {{> navi}}
 </body>
 
+
 <template name="start">
     <div id="start">
         <img id="icon" src="Deckblatt.svg" />
     </div>
 </template>
 
+<template name="maphome">
+    {{#constant}}
+    <div id="map-home"></div>
+    {{/constant}}
+</template>
+
 <template name="content">
     <section>
         <div id="content">
-            <div id="frameContent" ></div><br />
+            <div id="frameContent">{{> maphome}}
+
+            </div><br />
             <a href="#">
                  <div class="levelBtn" id="levelUp">
                      <div class="arrow" id="up"></div>
@@ -79,4 +88,3 @@
         </div>
     </nav>
 </template>
-
