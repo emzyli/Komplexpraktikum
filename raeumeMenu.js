@@ -1,5 +1,9 @@
-//btnType: Raeume oder Filter
+//btnType: 0:Zurueck|Kamera, 'ort', 'filter', 'info'
 toggleMenu = function toggleMenu(btnType) {
+    if (Session.get("toggled") == 'filter') {
+        //wir schlieﬂen jetzt Filter, muessen also ausgewaehlte Kriterien speichern
+        saveKriteria();
+    }
     if (Session.get("toggled") != btnType && btnType != 0) {
         //ver‰ndere zuletzt geklickten Button
         $('#' + Session.get("toggled") + ' a div').css('background', "url('icon_" + Session.get("toggled") + ".svg') no-repeat");
@@ -18,7 +22,7 @@ toggleMenu = function toggleMenu(btnType) {
         //‰ndere Label
         $('#' + btnType + ' a label').css('color', '#c00');
     }
-    else {
+    else {        
         $('#' + Session.get("toggled") + ' a div').css('background', "url('icon_" + Session.get("toggled") + ".svg') no-repeat");
         $('#' + Session.get("toggled") + ' a div').css('background-size', "125px");
         $('#' + Session.get("toggled") + ' a label').css('color', '#4defff');
@@ -30,25 +34,18 @@ toggleMenu = function toggleMenu(btnType) {
         $('#' + btnType + ' a div').css('background-size', "125px");
     }
 }
+
 toggleMenuContent = function toggleMenuContent(btnType) {
     var list = $('<ul>').attr('id', 'menuList');
 
-    if (btnType == 'filter') {
-        var fl = Session.get('filterList'); //array
-        if (fl.length == 0) toggleMenuFilter(); //neue Liste erstellen (nur beim ersten Mal)
-        else {
-            for(var i=0; i<fl.length;i++){
-            //Elemente aus array in Liste
-                list.append($('<li>').html(fl[i]));
-            }
-            updateList(list);
-        }
+    switch (btnType){
+        case 'filter': toggleMenuFilter(Session.get('filterList')); //neue Liste erstellen & Filterkriterien uebergeben
+        case 'info':
+            if (Session.get('rooms').length > 0 && Session.get("position") == 2) showRoomInfo(); //falls Raumansicht und Rauminfo schon gespeichert
+            else btnType = 'infoStart';
+        case 'ort': if (!Session.get("position")) btnType = 'bibos';//teste ob Campus-Ansicht  
     }
     if (btnType != 'filter') {
-        if (!Session.get("position")) {//teste ob Campus oder Slub-Ansicht                
-            btnType = 'bibos'
-        }
-
         //hole xml-Daten
         $(document).ready(function () {
             $.ajax({
@@ -56,7 +53,11 @@ toggleMenuContent = function toggleMenuContent(btnType) {
                 url: btnType + ".xml",
                 dataType: "xml",
                 success: function (data) {
-                    if (btnType == 'info') saveRoomInfo(data);
+                    if (btnType == 'info') {
+                        if (Session.get('rooms').length == 0) {//nur beim ersten Mal: Daten aller Raeume einfuegen
+                            saveRoomInfo(data);
+                        }
+                    }
                     else fillList(data);
                 }
             });
@@ -91,7 +92,12 @@ saveRoomInfo = function saveRoomInfo(xmlFile) {
     Session.set('rooms', rooms);
 }
 
-//'find' braucht nen hack: http://stackoverflow.com/questions/15776529/jquery-ajax-xml-find-works-in-ie-but-not-chrome
+//gibt die Informationen fuer den ausgewaehlten Raum an
+showRoomInfo = function showRoomInfo() {
+
+}
+
+//fuelle Menue
 fillList = function fillList(xmlFile) {
     var list = $('<ul>').attr('id', 'menuList');
     var entries = $(xmlFile).find('entry');
@@ -124,7 +130,7 @@ fillList = function fillList(xmlFile) {
     updateList(list);
 }
 
-toggleMenuFilter = function toggleMenuFilter() {
+toggleMenuFilter = function toggleMenuFilter(filterList) {
     var list = $('<ul>').attr('id', 'menuList');
     liH1 = $('<li>').addClass('heading');
     liH2 = $('<li>').addClass('heading');
@@ -147,6 +153,12 @@ toggleMenuFilter = function toggleMenuFilter() {
     inp4 = $("<input type=\"checkbox\" class=\"checkb\" id=\"teilen\" />");
     lb4 = $("<label for=\"teilen\">").text('Raum teilen');
 
+    //vorherige Filterauswahl uebernehmen
+    inp1.attr('value', filterList[0]);
+    inp2.attr('checked', filterList[1]);
+    inp3.attr('checked', filterList[2]);
+    inp4.attr('checked', filterList[3]);
+
     li1.append(inp1);
     li1.append(lb1);
     li2.append(inp2)
@@ -164,12 +176,41 @@ toggleMenuFilter = function toggleMenuFilter() {
     list.append(liH4);
     list.append(li4);
 
-    updateList(list);
-
-    var fList = [];
-    $(list + ' li').each(
-        function () {
-            fList.push($(this));
-        });
-    Session.set('filterList', fList); //globale Variable setzen
+    updateList(list);   
 }
+
+
+//speichert ausgewaehlte Filterkriterien in filterList
+function saveKriteria() {
+    fList = [];
+    fList[0] = parseInt($('#noPers').val());
+    fList[1] = $('#bea').is(":checked");
+    fList[2] = $('#pc').is(":checked");
+    fList[3] = $('#teilen').is(":checked");
+    Session.set('filterList', fList); //globale Variable setzen
+    adapt_fRooms(fList);
+}
+
+//fuellt fRooms mit den Raeumen aus rooms die den Filterkriterien entsprechen
+function adapt_fRooms(list) {
+    var fRooms = []
+    var rooms = Session.get('rooms');
+
+    for (var i = 0; i < rooms.length; i++) {//fuer jeden Raum
+        if (rooms[i][0] >= list[0] //personenzahl
+        && (rooms[i][1] == list[1] || list[1] == false) //beamer
+        && (rooms[i][2] == list[2] || list[2] == false) //pc
+        && (rooms[i][3] == list[3] || list[3] == false) //raum teilen
+        )
+            fRooms[fRooms.length] = rooms[i];
+    }
+    Session.set('fRooms', fRooms);
+}
+
+
+
+
+
+
+
+
