@@ -7,6 +7,7 @@ if (Meteor.isClient) {
     // Ebenennummer
     Session.setDefault("floor", 0);
     Session.setDefault("position", 0);
+
     //Ausklappmenue nicht ausgerollt
     Session.setDefault("toggled", 0);
 
@@ -18,8 +19,11 @@ if (Meteor.isClient) {
     //[(id, kapazitaet, ausstattung)]
     Session.setDefault("rooms", []);
 
-    //Filter-Liste (global um Auswahl beizubehalten)
-    Session.setDefault("filterList", []);
+    //speichert alle Raeume die den Filterkriterien entsprechen
+    Session.setDefault("fRooms", []);
+
+    //Filterkriterien {pers[2,20], beamer[0,1], computer[0,1], teilen[0,1]}
+    Session.setDefault("filterList", [2, false, false, false]);
 
     //Navigationsbuttons auf Karte
     var upBtn =  $('#levelUp');
@@ -147,19 +151,23 @@ if (Meteor.isClient) {
     }
 
     //Buttons in der Ebenenansicht einblenden
-    //@param:
-    function changeBtns(p){
-        if(p) {
+    //@param: p->0: Campus, 1->Ebene, 2->Raum
+    function changeBtns(p) {
+        if (p == 2) {
+            $('#info').css('visibility', 'visible');
+        }
+        if (p == 1) {
             $('#backBtn').css('transform', 'scaleX(1)');
             $('#filter').css('visibility', 'visible');
-            $('#info').css('visibility', 'visible');
+            $('#info').css('visibility', 'hidden');
             $('.tower').css('visibility', 'visible');
-        }else{
+        }
+        if(!p){
             $('#backBtn').css('transform', 'scaleX(-1)');
             $('#filter').css('visibility', 'hidden');
             $('#info').css('visibility', 'hidden');
             $('.tower').css('visibility', 'hidden');
-        }
+        }        
     }
     //ändert Karte und Turm
     // @param f: Ebene
