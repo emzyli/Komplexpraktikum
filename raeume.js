@@ -2,7 +2,9 @@
 if (Meteor.isClient) {
 
     //um Startdiv nach 2s auszublenden
-    Meteor.setTimeout(function(){hideStart()}, 2000);
+    Meteor.setTimeout(function () {
+        hideStart()
+    }, 2000);
 
     // Ebenennummer
     Session.setDefault("floor", 0);
@@ -39,79 +41,34 @@ if (Meteor.isClient) {
     //prüfe ob grad gedraggt wird
     Session.setDefault('dragging', false)
     //Navigationsbuttons auf Karte
-    var upBtn =  $('#levelUp');
+    var upBtn = $('#levelUp');
     upBtn.disabled = true;
 
 
- /*   Template.maphome.rendered = function() {
-        var mapHome = L.map('map-home', 'map1.svg');
-        mapHome.setView([30.28, -97.73], 13);
-
-    };*/
-
-    //Interaktion mit der NaviLeiste
-    Template.navi.events({
-        'click div#first': function () {
-            changeSVG(0, 2, Session.get("position"));
-            toggleMenu(0);
-        },
-        'click div#ort': function () {
-            if(Session.get("position"))
-                toggleMenu("ort");
-            else  toggleMenu("ort");
-        },
-        'click div#filter': function () {
-            toggleMenu("filter");
-        },
-        'click div#info': function () {
-            toggleMenu("info");
-        },
-        'click ul.ort li.menuel': function(){ //wir kommen in Raumansicht
-            Session.set("position", 2);
-            Session.set('roomId', $(this).attr('id')); //ausgewaehlter Raum
-        }
-    });
-    Template.navi.helpers({
-        firstBtn : function () {
-            if(Session.get("position")){
-                changeBtns(Session.get("position"));
-                return 'zurück';
-            } else {
-                changeBtns(Session.get("position"));;
-                return 'Zentralbibliothek';
-            }
-        },
-        position : function () {
-            if( !Session.get("position")){
-                return 'Standorte';
-            }else return 'Räume';
-        },
-        floor: function () {
-            return Session.get("floor");
-        }
-    });
-
-    //Interaktion mit dem Inhalt (SVG-Karten und Buttons)
+//Interaktion mit dem Inhalt (SVG-Karten und Buttons)
     Template.content.events({
         //mach es draggable
         'mousedown div#frameContent': function() {
-            Session.set('dragging', true)
-            Session.set("downX", event.pageX);
-            Session.set("downY", event.pageY);
-            $('#frameContent').css('cursor', 'move');
-        },
-        'mouseup div#frameContent': function() {
-            if( Session.get('dragging')== true){
-                Session.set('dragging', false)
-                Session.set("upX", event.pageX);
-                Session.set("upY", event.pageY);
-                drag(event);
-                $('#frameContent').css('cursor', 'auto');
-
+            if (!Session.get('dragging')) {
+                Session.set('dragging', true);
+                //liest position der Maus aus
+                Session.set("downX", event.pageX);
+                Session.set("downY", event.pageY);
+                $('#frameContent').css('cursor', 'move');
             }
         },
-       'dblclick div#frameContent': function(){
-           if(  Session.get("position"))  zoomRoom(event);
+        'mouseup div#frameContent': function() {
+            if( Session.get('dragging')){
+                Session.set('dragging', false)
+                //liest position der Maus aus
+                Session.set("upX", event.pageX);
+                Session.set("upY", event.pageY);
+                $('#frameContent').css('cursor', 'auto');
+                drag(event);
+            }
+        },
+        'dblclick div#frameContent': function(){
+            if(  Session.get("position"))  zoomRoom(event);
         },
         'click div#levelDown' : function() {
             changeSVG(Session.get("floor"), 1, 1);
@@ -124,32 +81,77 @@ if (Meteor.isClient) {
         },
         'click a#out': function () {
             zoomOut();
-    }
+        }
     });
+    //Interaktion mit der NaviLeiste
+    Template.navi.events({
+        'click div#first': function () {
+            changeSVG(0, 2, Session.get("position"));
+            toggleMenu(0);
+        },
+        'click div#ort': function () {
+            if (Session.get("position"))
+                toggleMenu("ort");
+            else  toggleMenu("ort");
+        },
+        'click div#filter': function () {
+            toggleMenu("filter");
+        },
+        'click div#info': function () {
+            toggleMenu("info");
+        },
+        'click ul.ort li.menuel': function () { //wir kommen in Raumansicht
+            Session.set("position", 2);
+            Session.set('roomId', $(this).attr('id')); //ausgewaehlter Raum
+        }
+    });
+    Template.navi.helpers({
+        firstBtn: function () {
+            if (Session.get("position")) {
+                changeBtns(Session.get("position"));
+                return 'zurück';
+            } else {
+                changeBtns(Session.get("position"));
+                ;
+                return 'Zentralbibliothek';
+            }
+        },
+        position: function () {
+            if (!Session.get("position")) {
+                return 'Standorte';
+            } else return 'Räume';
+        },
+        floor: function () {
+            return Session.get("floor");
+        }
+    });
+
+
     function drag(){
-      /*  so will es nicht...
-        var myPosX = $('#frameContent').css("background-position-x");
-        var myPosY = $('#frameContent').css("background-position-y");*/
-        Session.get("bgx");
-        Session.get("bgy");
+        /*  so will es nicht...
+         var myPosX = $('#frameContent').css("background-position-x");
+         var myPosY = $('#frameContent').css("background-position-y");*/
+
+        /*ES GEHT NCIHT!!!!!!!*/
+
         //x2-x1 und y2-y1
         var deltaX =Session.get('upX')-Session.get('downX');
         var deltaY =Session.get('upY')-Session.get('downY');
         if(deltaX=0){
             //ziehen nach oben
             if(deltaY < 0){
-                $('#frameContent').css({"background-position": (Session.get("bgx"))+'px '+(Session.get("bgy")-10)+'px'});
-                Session.set("bgy",   Session.get("bgy")-10);
+                $('#frameContent').css({"background-position": (Session.get("bgx")+0)+'px '+(Session.get("bgy")-20)+'px'});
+                Session.set("bgy",   Session.get("bgy")-20);
 
                 Session.set('downX', 0);
                 Session.set('upX', 0);
                 Session.set('downY', 0);
                 Session.set('upY', 0);
                 return;
-            //ziehen nach unten
+                //ziehen nach unten
             }else  if(deltaY > 0){
-                $('#frameContent').css({"background-position": (Session.get("bgx"))+'px '+(Session.get("bgy")+10)+'px'});
-                Session.set("bgy",   Session.get("bgy")+10);
+                $('#frameContent').css({"background-position": (Session.get("bgx")+0)+'px '+(Session.get("bgy")+20)+'px'});
+                Session.set("bgy",   Session.get("bgy")+20);
 
                 Session.set('downX', 0);
                 Session.set('upX', 0);
@@ -160,9 +162,9 @@ if (Meteor.isClient) {
         }else if(deltaX>0){
             //nach oben rechts
             if(deltaY<0){
-                $('#frameContent').css({"background-position": (Session.get("bgx")+10)+'px '+(Session.get("bgy")-10)+'px'});
-                Session.set("bgx",   Session.get("bgy")+10);
-                Session.set("bgy",   Session.get("bgy")-10);
+                $('#frameContent').css({"background-position": (Session.get("bgx")+20)+'px '+(Session.get("bgy")-20)+'px'});
+                Session.set("bgx",   Session.get("bgx")+20);
+                Session.set("bgy",   Session.get("bgy")-20);
 
                 Session.set('downX', 0);
                 Session.set('upX', 0);
@@ -171,9 +173,10 @@ if (Meteor.isClient) {
                 return;
             }
             //nach rechts
-           else if(deltaY=0){
-                $('#frameContent').css({"background-position": (Session.get("bgx")+10)+'px '+(Session.get("bgy"))+'px'});
-                Session.set("bgx",   Session.get("bgy")+10);
+            else if(deltaY=0){
+                $('#frameContent').css({"background-position": (Session.get("bgx")+20)+'px '+(Session.get("bgy")+0)+'px'});
+                Session.set("bgx",   Session.get("bgx")+20);
+
                 Session.set('downX', 0);
                 Session.set('upX', 0);
                 Session.set('downY', 0);
@@ -182,9 +185,10 @@ if (Meteor.isClient) {
             }
             //nach unten rechts
             else if(deltaY>0){
-                $('#frameContent').css({"background-position": (Session.get("bgx")+10)+'px '+(Session.get("bgy")+10)+'px'});
-                Session.set("bgx",   Session.get("bgy")+10);
-                Session.set("bgy",   Session.get("bgy")+10);
+                $('#frameContent').css({"background-position": (Session.get("bgx")+20)+'px '+(Session.get("bgy")+20)+'px'});
+                Session.set("bgx",   Session.get("bgx")+20);
+                Session.set("bgy",   Session.get("bgy")+20);
+
                 Session.set('downX', 0);
                 Session.set('upX', 0);
                 Session.set('downY', 0);
@@ -194,9 +198,10 @@ if (Meteor.isClient) {
         }else{
             //nach oben links
             if(deltaY<0){
-                $('#frameContent').css({"background-position": (Session.get("bgx")-10)+'px '+(Session.get("bgy")-10)+'px'});
-                Session.set("bgx",   Session.get("bgy")-10);
-                Session.set("bgy",   Session.get("bgy")-10);
+                $('#frameContent').css({"background-position": (Session.get("bgx")-20)+'px '+(Session.get("bgy")-20)+'px'});
+                Session.set("bgx",   Session.get("bgx")-20);
+                Session.set("bgy",   Session.get("bgy")-20);
+
                 Session.set('downX', 0);
                 Session.set('upX', 0);
                 Session.set('downY', 0);
@@ -205,8 +210,9 @@ if (Meteor.isClient) {
             }
             //nach links
             else if(deltaY=0){
-                $('#frameContent').css({"background-position": (Session.get("bgx")-10)+'px '+(Session.get("bgy"))+'px'});
-                Session.set("bgx",   Session.get("bgy")-10);
+                $('#frameContent').css({"background-position": (Session.get("bgx")-20)+'px '+(Session.get("bgy"))+'px'});
+                Session.set("bgx",   Session.get("bgx")-20);
+
                 Session.set('downX', 0);
                 Session.set('upX', 0);
                 Session.set('downY', 0);
@@ -215,9 +221,10 @@ if (Meteor.isClient) {
             }
             //nach unten links
             else if(deltaY>0){
-                $('#frameContent').css({"background-position": (Session.get("bgx")-10)+'px '+(Session.get("bgy")+10)+'px'});
-                Session.set("bgx",   Session.get("bgy")-10);
-                Session.set("bgy",   Session.get("bgy")+10);
+                $('#frameContent').css({"background-position": (Session.get("bgx")-20)+'px '+(Session.get("bgy")+20)+'px'});
+                Session.set("bgx",   Session.get("bgx")-20);
+                Session.set("bgy",   Session.get("bgy")+20);
+
                 Session.set('downX', 0);
                 Session.set('upX', 0);
                 Session.set('downY', 0);
@@ -226,13 +233,13 @@ if (Meteor.isClient) {
             }
         }
     }
-    //in den Raum zoomen
+//in den Raum zoomen
     function zoomRoom(e){
         var x = e.pageX;
         var y = e.pageY;
 
-       $('#frameContent').css({"background-size" : '500%',
-                                "background-position": '-'+(x-350)+'px -'+(y)+'px'});
+        $('#frameContent').css({"background-size" : '500%',
+            "background-position": '-'+(x-350)+'px -'+(y)+'px'});
 
         Session.set("zoomLevel", 3);
         $('#out').removeClass('disabled');
@@ -241,7 +248,7 @@ if (Meteor.isClient) {
     }
 
 
-    //reinZoomen
+//reinZoomen
     function zoomIn() {
         zlevel = Session.get('zoomLevel');
         if (zlevel == 2) {
@@ -266,7 +273,7 @@ if (Meteor.isClient) {
         }
     }
 
-    //rausZoomen
+//rausZoomen
     function zoomOut() {
         zlevel = Session.get('zoomLevel');
         if (zlevel == 0) {
@@ -286,20 +293,19 @@ if (Meteor.isClient) {
             zlevel--;
             Session.set("zoomLevel", zlevel);
             $('#frameContent').css("background-size", (zlevel + 1) * 100 + '%');
-           // $('#frameContent').css("background-size", 'cover');
+            // $('#frameContent').css("background-size", 'cover');
             $('#frameContent').css("-webkit-transform:", "scale(0.4)");
             $('#frameContent').css("-moz-transform:", "scale(0.4)");
         }
-    }
-}  
+        S}
 
     //schließt Anfangsbild
-    function hideStart(){
-            $('#icon').fadeOut("slow");
-            $('#start').fadeOut("slow");
-           // $('#start').effect('slide', { direction: 'right', mode: 'hide' });
-            $('#content').css('visibility','visible').hide().fadeIn('slow');//.css('visibility', 'visible');
-            $('nav').css('visibility','visible').hide().fadeIn('slow');
+    function hideStart() {
+        $('#icon').fadeOut("slow");
+        $('#start').fadeOut("slow");
+        // $('#start').effect('slide', { direction: 'right', mode: 'hide' });
+        $('#content').css('visibility', 'visible').hide().fadeIn('slow');//.css('visibility', 'visible');
+        $('nav').css('visibility', 'visible').hide().fadeIn('slow');
     }
 
     //Buttons in der Ebenenansicht einblenden
@@ -315,32 +321,33 @@ if (Meteor.isClient) {
             $('#info').css('visibility', 'hidden');
             $('.tower').css('visibility', 'visible');
         }
-        if(!p){
+        if (!p) {
             $('#backBtn').css('transform', 'scaleX(-1)');
             $('#filter').css('visibility', 'hidden');
             $('#info').css('visibility', 'hidden');
             $('.tower').css('visibility', 'hidden');
-        }        
+        }
     }
+
     //ändert Karte und Turm
     // @param f: Ebene
     // @param i: ist 1 bei down und 0 bei up
     // @param p: aktuelle Position: 0..Campus, 1..SLUB
-    function changeSVG(f, i, p){
+    function changeSVG(f, i, p) {
         var tower = $('#tower');
-        var upBtn =  $('#levelUp');
-        var up =  $('#up');
-        var downBtn =  $('#levelDown');
-        var down =  $('#down');
+        var upBtn = $('#levelUp');
+        var up = $('#up');
+        var downBtn = $('#levelDown');
+        var down = $('#down');
         var iframe = $('#frameContent');
         var buttons = $('.levelBtn');
-        if(i==1) {
+        if (i == 1) {
             if (f == 0) {
                 iframe.css('background', "url('ebene-1.svg') no-repeat");
                 //floor = -1
                 Session.set("floor", Session.get("floor") - 1);
                 Session.set("zoomLevel", 0);
-                upBtn.disabled =  downBtn.disabled = false;
+                upBtn.disabled = downBtn.disabled = false;
 
                 tower.css('background', "url('stapel-1.svg') no-repeat");
                 tower.css('background-size', "111px");
@@ -359,8 +366,8 @@ if (Meteor.isClient) {
                 up.css('-webkit-filter', 'grayscale(0%)');
                 down.css('-webkit-filter', 'grayscale(100%)');
             }
-        }else if(i==0){
-            if (f ==  -1) {
+        } else if (i == 0) {
+            if (f == -1) {
                 iframe.css('background', "url('Ebene0.svg') no-repeat");
                 //floor = 0
                 Session.set("floor", Session.get("floor") + 1);
@@ -385,13 +392,13 @@ if (Meteor.isClient) {
                 up.css('-webkit-filter', 'grayscale(0%)');
                 down.css('-webkit-filter', 'grayscale(0%)');
             }
-        }else{
-            if (p){
+        } else {
+            if (p) {
                 Session.set("position", 0);
                 Session.set("zoomLevel", 0);
                 iframe.css('background', "url('map1.svg') no-repeat");
                 buttons.css('visibility', 'hidden');
-            }else {
+            } else {
                 Session.set("position", 1);
                 Session.set("zoomLevel", 0);
                 iframe.css('background', "url('Ebene0.svg') no-repeat");
@@ -405,14 +412,11 @@ if (Meteor.isClient) {
     }
 
 
-if (Meteor.isServer) {
-    Meteor.startup(function () {
-        // code to run on server at startup
+    if (Meteor.isServer) {
+        Meteor.startup(function () {
+            // code to run on server at startup
 
-    });
-    Meteor.onload = function () {
-        L.mapbox.accessToken = 'pk.eyJ1IjoiYWxleG5ldHNjaCIsImEiOiJsX0V6Wl9NIn0.i14NX5hv3bkVIi075nOM2g';
-        var map = L.mapbox.map('frameContent', 'map1.svg') .setView([40, -74.50], 9);;
-    };
+        });
+
+    }
 }
-
