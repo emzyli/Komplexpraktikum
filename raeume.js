@@ -15,6 +15,9 @@ if (Meteor.isClient) {
     // wird in zoomIn, zoomOut verringert/erhoeht
     Session.setDefault("zoomLevel", 0);
 
+    //die ID des momentan ausgewaehlten Raums (Raumansicht)
+    Session.setDefault("roomId", '');
+
     //speichert alle Raeume, inkl Info
     //[(id, kapazitaet, ausstattung)]
     Session.setDefault("rooms", []);
@@ -23,7 +26,7 @@ if (Meteor.isClient) {
     Session.setDefault("fRooms", []);
 
     //Filterkriterien {pers[2,20], beamer[0,1], computer[0,1], teilen[0,1]}
-    Session.setDefault("filterList", [2, false, false, false]);
+    Session.setDefault("filterList", [2, 0, 0, false]);
 
     //Navigationsbuttons auf Karte
     var upBtn =  $('#levelUp');
@@ -56,6 +59,10 @@ if (Meteor.isClient) {
         },
         'click div#info': function () {
             toggleMenu("info");
+        },
+        'click ul.ort li.menuel': function(){ //wir kommen in Raumansicht
+            Session.set("position", 2);
+            Session.set('roomId', $(this).attr('id')); //ausgewaehlter Raum
         }
     });
     Template.navi.helpers({
@@ -163,6 +170,7 @@ if (Meteor.isClient) {
     function changeBtns(p) {
         if (p == 2) {
             $('#info').css('visibility', 'visible');
+            $('#kamera').css('visibility', 'visible');
         }
         if (p == 1) {
             $('#backBtn').css('transform', 'scaleX(1)');

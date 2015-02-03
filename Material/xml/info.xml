@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <info>
 <entry>
-	<id>40</id>
+	<id>0.40</id>
 	<heading>Kapazität</heading>
 	<pers>6</pers>
 </entry>
 <entry>
-	<id>41</id>
+	<id>0.41</id>
 	<heading>Kapazität</heading>
 	<pers>3+3</pers>
 	<heading>Ausstattung</heading>
 	<computer>1</computer>
 </entry>
 <entry>
-	<id>42</id>
+	<id>0.42</id>
 	<heading>Kapazität</heading>
 	<pers>10</pers>
 	<heading>Ausstattung</heading>
@@ -21,19 +21,19 @@
 	<beamer>1</beamer>
 </entry>
 <entry>
-	<id>43</id>
+	<id>0.43</id>
 	<heading>Kapazität</heading>
 	<pers>6</pers>
 </entry>
 <entry>
-	<id>46</id>
+	<id>0.46</id>
 	<heading>Kapazität</heading>
-	<pers>10 Personen</pers>
+	<pers>10</pers>
 	<heading>Ausstattung</heading>
 	<beamer>1</beamer>
 </entry>
 <entry>
-	<id>47</id>
+	<id>0.47</id>
 	<heading>Kapazität</heading>
 	<pers>15</pers>
 	<heading>Ausstattung</heading>
@@ -41,17 +41,17 @@
 	<beamer>1</beamer>
 </entry>
 <entry>
-	<id>66</id>
+	<id>0.66</id>
 	<heading>Kapazität</heading>
 	<pers>6</pers>
 </entry>
 <entry>
-	<id>116</id>
+	<id>-1.116</id>
 	<heading>Kapazität</heading>
 	<pers>15</pers>
 </entry>
 <entry>
-	<id>115</id>
+	<id>-2.115</id>
 	<heading>Kapazität</heading>
 	<pers>20</pers>
 </entry>

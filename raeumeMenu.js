@@ -2,7 +2,7 @@
 toggleMenu = function toggleMenu(btnType) {
     if (Session.get("toggled") == 'filter') {
         //wir schließen jetzt Filter, muessen also ausgewaehlte Kriterien speichern
-        saveKriteria();
+        saveCriteria();
     }
     if (Session.get("toggled") != btnType && btnType != 0) {
         //verändere zuletzt geklickten Button
@@ -12,7 +12,7 @@ toggleMenu = function toggleMenu(btnType) {
         Session.set("toggled", btnType);
         //öffne menü
         $('#menu').effect('slide', { direction: 'left', mode: 'show' });
-        //   $('#menu').html('<p>' + btnType + '</p>');
+        //   $('#menu').html('<p>' + btnType + '</p>');sav
         toggleMenuContent(btnType);
         //verschiebe den roten Balken
         $('nav').css('border', 'none');
@@ -35,34 +35,46 @@ toggleMenu = function toggleMenu(btnType) {
     }
 }
 
-toggleMenuContent = function toggleMenuContent(btnType) {
-    var list = $('<ul>').attr('id', 'menuList');
 
-    switch (btnType){
-        case 'filter': toggleMenuFilter(Session.get('filterList')); //neue Liste erstellen & Filterkriterien uebergeben
-        case 'info':
-            if (Session.get('rooms').length > 0 && Session.get("position") == 2) showRoomInfo(); //falls Raumansicht und Rauminfo schon gespeichert
-            else btnType = 'infoStart';
-        case 'ort': if (!Session.get("position")) btnType = 'bibos';//teste ob Campus-Ansicht  
+toggleMenuContent = function toggleMenuContent(btnType) {
+    getInfoXml(); //speichere Rauminfos
+    if (btnType == 'ort' && !Session.get("position")) {
+        btnType = 'bibos'; //teste ob Campus-Ansicht -> zweigbibos
+    }
+    if (btnType == 'filter') {
+        toggleMenuFilter(Session.get('filterList'));  //Liste erstellen & Filterkriterien uebergeben    
     }
     if (btnType != 'filter') {
         //hole xml-Daten
         $(document).ready(function () {
             $.ajax({
                 type: "GET",
-                url: btnType + ".xml",
+                url: btnType+".xml",
                 dataType: "xml",
                 success: function (data) {
-                    if (btnType == 'info') {
-                        if (Session.get('rooms').length == 0) {//nur beim ersten Mal: Daten aller Raeume einfuegen
-                            saveRoomInfo(data);
-                        }
+                    switch (btnType) {
+                        case 'info': showRoomInfo(Session.get('roomId'), data); break;
+                        case 'bibos': fillList(data); break;
+                        case 'ort': get_fRooms(data); break; //falls Rauminfo schon gespeichert                        
                     }
-                    else fillList(data);
                 }
             });
         });
     }
+}
+
+//hole Daten aller Raeume (info.xml)
+function getInfoXml() {
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "info.xml",
+            dataType: "xml",
+            success: function (data) {
+                saveRoomInfo(data);
+            }
+        });
+    });
 }
 
 //fuege dem Menu-Div Liste hinzu
@@ -71,35 +83,10 @@ updateList = function updateList(list) {
     $('#menu').append(list);
 }
 
-//fuegt alle Raeume inkl Info in "rooms" ein
-saveRoomInfo = function saveRoomInfo(xmlFile) {
-    var rooms = [];
-    var entries = $(xmlFile).find('entry');
-    entries.each(function () {
-        var room = [];
-        //id
-        room.push($(this).find('id').text());
-        //personenanzahl
-        room.push($(this).find('pers').text());
-        //pc falls vorhanden
-        if ($(this).find('computer').length > 0)
-            room.push($(this).find('computer').text());
-        //beamer falls vorhanden
-        if ($(this).find('beamer').length > 0)
-            room.push($(this).find('beamer').text());
-        rooms.push(room);
-    });
-    Session.set('rooms', rooms);
-}
-
-//gibt die Informationen fuer den ausgewaehlten Raum an
-showRoomInfo = function showRoomInfo() {
-
-}
 
 //fuelle Menue
 fillList = function fillList(xmlFile) {
-    var list = $('<ul>').attr('id', 'menuList');
+    var list = $('<ul>').attr('id', 'menuList'); list.addClass(($(xmlFile).find(":root")).tagName);
     var entries = $(xmlFile).find('entry');
 
     //fuer jeden Entry Listelemente einfuegen
@@ -123,12 +110,14 @@ fillList = function fillList(xmlFile) {
             liEList.each(function () {
                 liE = $('<li>').addClass('menuel');
                 liE.html($(this).text());
+                liE.attr('id', $(this).text().substr(8, $(this).text().length-1)); //damit Raumnummer als Id hinzugefuegt wird
                 list.append(liE);
             });
         }
     });
     updateList(list);
 }
+
 
 toggleMenuFilter = function toggleMenuFilter(filterList) {
     var list = $('<ul>').attr('id', 'menuList');
@@ -146,17 +135,17 @@ toggleMenuFilter = function toggleMenuFilter(filterList) {
 
     inp1 = $("<input type=\"number\" id=\"noPers\" min=\"20\" max=\"20\" />");
     lb1 = $("<label for=\"noPers\">").text('Personen');
-    inp2 = $("<input type=\"checkbox\" class=\"checkb\" id=\"bea\" />");
+    inp2 = $("<input type=\"number\" id=\"bea\" />");
     lb2 = $("<label for=\"bea\">").text('Beamer');
-    inp3 = $("<input type=\"checkbox\" class=\"checkb\" id=\"pc\" />");
+    inp3 = $("<input type=\"number\" id=\"pc\" />");
     lb3 = $("<label for=\"pc\">").text('Computer');
     inp4 = $("<input type=\"checkbox\" class=\"checkb\" id=\"teilen\" />");
     lb4 = $("<label for=\"teilen\">").text('Raum teilen');
 
     //vorherige Filterauswahl uebernehmen
     inp1.attr('value', filterList[0]);
-    inp2.attr('checked', filterList[1]);
-    inp3.attr('checked', filterList[2]);
+    inp2.attr('value', filterList[1]);
+    inp3.attr('value', filterList[2]);
     inp4.attr('checked', filterList[3]);
 
     li1.append(inp1);
@@ -181,33 +170,90 @@ toggleMenuFilter = function toggleMenuFilter(filterList) {
 
 
 //speichert ausgewaehlte Filterkriterien in filterList
-function saveKriteria() {
+function saveCriteria() {
     fList = [];
     fList[0] = parseInt($('#noPers').val());
-    fList[1] = $('#bea').is(":checked");
-    fList[2] = $('#pc').is(":checked");
+    fList[1] = parseInt($('#bea').val());
+    fList[2] = parseInt($('#pc').val());
     fList[3] = $('#teilen').is(":checked");
     Session.set('filterList', fList); //globale Variable setzen
-    adapt_fRooms(fList);
+    adapt_fRooms();
+}
+
+
+//fuegt alle Raeume inkl Info in "rooms" ein
+saveRoomInfo = function saveRoomInfo(data) {    
+    var rooms = [];
+    var entries = $(data).find('entry');
+    entries.each(function () {
+        var room = [];
+        //id
+        room.push($(this).find('id').text());
+        //personenanzahl
+        room.push($(this).find('pers').text());
+        //pc falls vorhanden
+        if ($(this).find('computer').length > 0)
+            room.push($(this).find('computer').text());
+        //beamer falls vorhanden
+        if ($(this).find('beamer').length > 0)
+            room.push($(this).find('beamer').text());
+        rooms.push(room);
+    });
+    Session.set('rooms', rooms);
+}
+
+//zeigt die Informationen fuer den ausgewaehlten Raum in ul an (hole Raum per Id)
+showRoomInfo = function showRoomInfo(roomId, data) {
+    $(data).find('entry').each(
+        function(){
+            if($(this).find('id').eq(roomId))
+                fillList($(this)); return;
+        });    
+}
+
+//gibt Raum-Index in rooms mit roomId zurueck 
+function getRoomInd(roomId) {
+    var rooms = Session.get('rooms');
+    for (var i = 0; i < rooms.length; i++) {//fuer jeden Raum
+        if (rooms[i][0] == roomId) return i; //wenn Id des Raumes roomId entspricht: Treffer
+    }
 }
 
 //fuellt fRooms mit den Raeumen aus rooms die den Filterkriterien entsprechen
-function adapt_fRooms(list) {
-    var fRooms = []
+function adapt_fRooms() {
+    var list = Session.get('filterList');
+    var fRooms = [];
     var rooms = Session.get('rooms');
-
     for (var i = 0; i < rooms.length; i++) {//fuer jeden Raum
-        if (rooms[i][0] >= list[0] //personenzahl
-        && (rooms[i][1] == list[1] || list[1] == false) //beamer
-        && (rooms[i][2] == list[2] || list[2] == false) //pc
-        && (rooms[i][3] == list[3] || list[3] == false) //raum teilen
+        if (parseInt(rooms[i][1]) >= list[0]  || list[0] == 0 //personenzahl
+        && (parseInt(rooms[i][2]) >= list[1]) || list[1] == 0 //beamer
+        && (parseInt(rooms[i][3]) >= list[2]) || list[2] == 0 //pc
         )
             fRooms[fRooms.length] = rooms[i];
     }
     Session.set('fRooms', fRooms);
 }
 
-
+//gibt fRooms als xml aus, also Raeume aus rooms die den Filterkriterien entsprechen
+function get_fRooms(data) {
+    adapt_fRooms();
+    var fRooms;
+    if (Session.get('fRooms').length > 0) fRooms = Session.get('fRooms');
+    else fRooms = Session.get('rooms');
+    var roomsXml = $('<XMLDocument />');
+    var entry = $('<entry />');
+    for (var i = 0; i < fRooms.length; i++) {
+        $(data).find('eintrag').each(
+         function () {
+             var fuck = $.trim(($(this).text()));
+             var shit = 'Raum ' + fRooms[i][0];
+             if (fuck==shit)
+                 entry.append($(this));
+         });
+    }
+    roomsXml.append(entry);
+    fillList(roomsXml);
+}
 
 
 
