@@ -51,7 +51,7 @@ section div#content {
 #frameContent {
     width: 1727px;
     height: 1535px;
-    background: url(map1.svg) no-repeat;
+    background: url('map1.svg') no-repeat;
     background-size: cover;
     background-position-x: 0px;
     background-position-y: 0px;
