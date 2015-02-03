@@ -225,9 +225,15 @@ function adapt_fRooms() {
     var fRooms = [];
     var rooms = Session.get('rooms');
     for (var i = 0; i < rooms.length; i++) {//fuer jeden Raum
-        if (parseInt(rooms[i][1]) >= list[0]  || list[0] == 0 //personenzahl
-        && (parseInt(rooms[i][2]) >= list[1]) || list[1] == 0 //beamer
-        && (parseInt(rooms[i][3]) >= list[2]) || list[2] == 0 //pc
+        var int1 = parseInt(rooms[i][1]);
+        var int2 = parseInt(rooms[i][2]);
+        var int3 = parseInt(rooms[i][3]);
+        var bool1 = int1 >= list[0];
+        var bool2 = int2 >= list[1];
+        var bool3 = int3 >= list[2];
+        if ((bool1 || list[0] == 0) //personenzahl
+        && (bool2 || list[1] == 0) //beamer
+        && (bool3 || list[2] == 0) //pc
         )
             fRooms[fRooms.length] = rooms[i];
     }
@@ -237,22 +243,33 @@ function adapt_fRooms() {
 //gibt fRooms als xml aus, also Raeume aus rooms die den Filterkriterien entsprechen
 function get_fRooms(data) {
     adapt_fRooms();
-    var fRooms;
-    if (Session.get('fRooms').length > 0) fRooms = Session.get('fRooms');
-    else fRooms = Session.get('rooms');
-    var roomsXml = $('<XMLDocument />');
-    var entry = $('<entry />');
-    for (var i = 0; i < fRooms.length; i++) {
-        $(data).find('eintrag').each(
-         function () {
-             var fuck = $.trim(($(this).text()));
-             var shit = 'Raum ' + fRooms[i][0];
-             if (fuck==shit)
-                 entry.append($(this));
-         });
+    var fRooms = Session.get('fRooms');
+    if (Session.get('filterList')[0] == 2 &&
+          Session.get('filterList')[1] == 0 &&
+          Session.get('filterList')[2] == 0)
+        fRooms = Session.get('rooms'); //FilterListe noch initial
+    if (fRooms.length == 0) {
+        //keine den Kriterien entsprechenden Raeume
+        var entry = $('<entry />');
+        entry.append('<eintrag>Keine den Kriterien</eintrag><eintrag>entsprechenden R&auml;ume</eintrag><eintrag>gefunden</eintrag>');
+        fRooms = $('<XMLDocument />').append(entry);
+        fillList(fRooms);
     }
-    roomsXml.append(entry);
-    fillList(roomsXml);
+    else {
+        var roomsXml = $('<XMLDocument />');
+        var entry = $('<entry />');
+        for (var i = 0; i < fRooms.length; i++) {
+            $(data).find('eintrag').each(
+             function () {
+                 var fuck = $.trim(($(this).text()));
+                 var shit = 'Raum ' + fRooms[i][0];
+                 if (fuck == shit)
+                     entry.append($(this));
+             });
+        }
+        roomsXml.append(entry);
+        fillList(roomsXml);
+    }
 }
 
 
