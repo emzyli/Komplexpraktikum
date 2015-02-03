@@ -43,9 +43,22 @@ section div#content {
     border: none;
     width: 1727px;
     height: 1535px;
-    overflow: auto;
+
+   /* overflow: auto;*/
+
 }
 
+#frameContent {
+    width: 1727px;
+    height: 1535px;
+    background: url(map1.svg) no-repeat;
+    background-size: cover;
+    background-position-x: 0px;
+    background-position-y: 0px;
+  /*  position: absolute;*/
+    /*  overflow: auto;*/
+}
+#frameContent
 .buttonPosition {
     padding-top: 10px;
     height:171px;
@@ -187,12 +200,6 @@ section div#content {
     background: rgba(102, 102, 102, 0.6);
 }
 
-#frameContent {
-    width: 1727px;
-    height: 1535px;
-   /* background: url(map1.svg) no-repeat;*/
-    overflow: auto;
-}
 
 #start {
     width: 2047px;
@@ -281,7 +288,7 @@ section div#content {
 /*checkboxen*/
 .checkb[type='checkbox']{
     -ms-transform: scale(4); /* IE */
-    -moz-transform: scale(4); /* FF */
+    -moz-transform: scale(2); /* FF */
     -webkit-transform: scale(4); /* Safari and Chrome */
     -o-transform: scale(4); /* Opera */
     margin-right: 45px;

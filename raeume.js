@@ -27,22 +27,28 @@ if (Meteor.isClient) {
 
     //Filterkriterien {pers[2,20], beamer[0,1], computer[0,1], teilen[0,1]}
     Session.setDefault("filterList", [2, 0, 0, false]);
-
+    //background-position X und Y
+    Session.setDefault("bgx", 0);
+    Session.setDefault("bgy", 0);
+    //mousedown X und mousedown Y
+    Session.setDefault("downX", 0);
+    Session.setDefault("downY", 0);
+    //mouseup X und mouseup Y
+    Session.setDefault("upX", 0);
+    Session.setDefault("upY", 0);
+    //prüfe ob grad gedraggt wird
+    Session.setDefault('dragging', false)
     //Navigationsbuttons auf Karte
     var upBtn =  $('#levelUp');
     upBtn.disabled = true;
-    /*    var downBtn =  $('#levelDown');
- 
-     downBtn.disabled = false;*/
 
-    Template.maphome.rendered = function() {
+
+ /*   Template.maphome.rendered = function() {
         var mapHome = L.map('map-home', 'map1.svg');
         mapHome.setView([30.28, -97.73], 13);
 
-        var OpenStreetMap_Mapnik = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
-        })
-    };
+    };*/
+
     //Interaktion mit der NaviLeiste
     Template.navi.events({
         'click div#first': function () {
@@ -88,9 +94,25 @@ if (Meteor.isClient) {
     //Interaktion mit dem Inhalt (SVG-Karten und Buttons)
     Template.content.events({
         //mach es draggable
-        /*'click div#frameContent': function(){
-            $('#frameContent').mousedown(handle_mousedown($(this)));
-        },*/
+        'mousedown div#frameContent': function() {
+            Session.set('dragging', true)
+            Session.set("downX", event.pageX);
+            Session.set("downY", event.pageY);
+            $('#frameContent').css('cursor', 'move');
+        },
+        'mouseup div#frameContent': function() {
+            if( Session.get('dragging')== true){
+                Session.set('dragging', false)
+                Session.set("upX", event.pageX);
+                Session.set("upY", event.pageY);
+                drag(event);
+                $('#frameContent').css('cursor', 'auto');
+
+            }
+        },
+       'dblclick div#frameContent': function(){
+           if(  Session.get("position"))  zoomRoom(event);
+        },
         'click div#levelDown' : function() {
             changeSVG(Session.get("floor"), 1, 1);
         },
@@ -104,6 +126,120 @@ if (Meteor.isClient) {
             zoomOut();
     }
     });
+    function drag(){
+      /*  so will es nicht...
+        var myPosX = $('#frameContent').css("background-position-x");
+        var myPosY = $('#frameContent').css("background-position-y");*/
+        Session.get("bgx");
+        Session.get("bgy");
+        //x2-x1 und y2-y1
+        var deltaX =Session.get('upX')-Session.get('downX');
+        var deltaY =Session.get('upY')-Session.get('downY');
+        if(deltaX=0){
+            //ziehen nach oben
+            if(deltaY < 0){
+                $('#frameContent').css({"background-position": (Session.get("bgx"))+'px '+(Session.get("bgy")-10)+'px'});
+                Session.set("bgy",   Session.get("bgy")-10);
+
+                Session.set('downX', 0);
+                Session.set('upX', 0);
+                Session.set('downY', 0);
+                Session.set('upY', 0);
+                return;
+            //ziehen nach unten
+            }else  if(deltaY > 0){
+                $('#frameContent').css({"background-position": (Session.get("bgx"))+'px '+(Session.get("bgy")+10)+'px'});
+                Session.set("bgy",   Session.get("bgy")+10);
+
+                Session.set('downX', 0);
+                Session.set('upX', 0);
+                Session.set('downY', 0);
+                Session.set('upY', 0);
+                return;
+            }
+        }else if(deltaX>0){
+            //nach oben rechts
+            if(deltaY<0){
+                $('#frameContent').css({"background-position": (Session.get("bgx")+10)+'px '+(Session.get("bgy")-10)+'px'});
+                Session.set("bgx",   Session.get("bgy")+10);
+                Session.set("bgy",   Session.get("bgy")-10);
+
+                Session.set('downX', 0);
+                Session.set('upX', 0);
+                Session.set('downY', 0);
+                Session.set('upY', 0);
+                return;
+            }
+            //nach rechts
+           else if(deltaY=0){
+                $('#frameContent').css({"background-position": (Session.get("bgx")+10)+'px '+(Session.get("bgy"))+'px'});
+                Session.set("bgx",   Session.get("bgy")+10);
+                Session.set('downX', 0);
+                Session.set('upX', 0);
+                Session.set('downY', 0);
+                Session.set('upY', 0);
+                return;
+            }
+            //nach unten rechts
+            else if(deltaY>0){
+                $('#frameContent').css({"background-position": (Session.get("bgx")+10)+'px '+(Session.get("bgy")+10)+'px'});
+                Session.set("bgx",   Session.get("bgy")+10);
+                Session.set("bgy",   Session.get("bgy")+10);
+                Session.set('downX', 0);
+                Session.set('upX', 0);
+                Session.set('downY', 0);
+                Session.set('upY', 0);
+                return;
+            }
+        }else{
+            //nach oben links
+            if(deltaY<0){
+                $('#frameContent').css({"background-position": (Session.get("bgx")-10)+'px '+(Session.get("bgy")-10)+'px'});
+                Session.set("bgx",   Session.get("bgy")-10);
+                Session.set("bgy",   Session.get("bgy")-10);
+                Session.set('downX', 0);
+                Session.set('upX', 0);
+                Session.set('downY', 0);
+                Session.set('upY', 0);
+                return;
+            }
+            //nach links
+            else if(deltaY=0){
+                $('#frameContent').css({"background-position": (Session.get("bgx")-10)+'px '+(Session.get("bgy"))+'px'});
+                Session.set("bgx",   Session.get("bgy")-10);
+                Session.set('downX', 0);
+                Session.set('upX', 0);
+                Session.set('downY', 0);
+                Session.set('upY', 0);
+                return;
+            }
+            //nach unten links
+            else if(deltaY>0){
+                $('#frameContent').css({"background-position": (Session.get("bgx")-10)+'px '+(Session.get("bgy")+10)+'px'});
+                Session.set("bgx",   Session.get("bgy")-10);
+                Session.set("bgy",   Session.get("bgy")+10);
+                Session.set('downX', 0);
+                Session.set('upX', 0);
+                Session.set('downY', 0);
+                Session.set('upY', 0);
+                return;
+            }
+        }
+    }
+    //in den Raum zoomen
+    function zoomRoom(e){
+        var x = e.pageX;
+        var y = e.pageY;
+
+       $('#frameContent').css({"background-size" : '500%',
+                                "background-position": '-'+(x-350)+'px -'+(y)+'px'});
+
+        Session.set("zoomLevel", 3);
+        $('#out').removeClass('disabled');
+        $('#out').attr('style', 'opacity: 1; cursor: pointer');
+        return;
+    }
+
 
     //reinZoomen
     function zoomIn() {
@@ -150,6 +286,7 @@ if (Meteor.isClient) {
             zlevel--;
             Session.set("zoomLevel", zlevel);
             $('#frameContent').css("background-size", (zlevel + 1) * 100 + '%');
+           // $('#frameContent').css("background-size", 'cover');
             $('#frameContent').css("-webkit-transform:", "scale(0.4)");
             $('#frameContent').css("-moz-transform:", "scale(0.4)");
         }
