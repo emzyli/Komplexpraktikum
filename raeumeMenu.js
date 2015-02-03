@@ -225,15 +225,9 @@ function adapt_fRooms() {
     var fRooms = [];
     var rooms = Session.get('rooms');
     for (var i = 0; i < rooms.length; i++) {//fuer jeden Raum
-        var int1 = parseInt(rooms[i][1]);
-        var int2 = parseInt(rooms[i][2]);
-        var int3 = parseInt(rooms[i][3]);
-        var bool1 = int1 >= list[0];
-        var bool2 = int2 >= list[1];
-        var bool3 = int3 >= list[2];
-        if ((bool1 || list[0] == 0) //personenzahl
-        && (bool2 || list[1] == 0) //beamer
-        && (bool3 || list[2] == 0) //pc
+        if ((parseInt(rooms[i][1]) >= list[0] || list[0] == 0) //personenzahl
+        && (parseInt(rooms[i][2]) >= list[1] || list[1] == 0) //beamer
+        && (parseInt(rooms[i][3]) >= list[2]|| list[2] == 0) //pc
         )
             fRooms[fRooms.length] = rooms[i];
     }
@@ -261,9 +255,7 @@ function get_fRooms(data) {
         for (var i = 0; i < fRooms.length; i++) {
             $(data).find('eintrag').each(
              function () {
-                 var fuck = $.trim(($(this).text()));
-                 var shit = 'Raum ' + fRooms[i][0];
-                 if (fuck == shit)
+                 if ($.trim(($(this).text())) == 'Raum ' + fRooms[i][0])
                      entry.append($(this));
              });
         }
