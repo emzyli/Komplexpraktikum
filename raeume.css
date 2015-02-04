@@ -298,9 +298,9 @@ ul.menuort li.menuel:hover{
     margin-right: 45px;
     margin-left: 31px;
 }
-#noPers{
+#noPers, #bea, #pc{
     margin-right: 10px;
-    width: 78px;
+    width: 100px;
 }
 
 /*ZoomFeld*/

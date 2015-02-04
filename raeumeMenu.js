@@ -134,11 +134,11 @@ toggleMenuFilter = function toggleMenuFilter(filterList) {
     liH2.html('Ausstattung');
     liH4.html('Zusatz');
 
-    inp1 = $("<input type=\"number\" id=\"noPers\" min=\"20\" max=\"20\" />");
+    inp1 = $("<input type=\"number\" id=\"noPers\" min=\"2\" max=\"20\" />");
     lb1 = $("<label for=\"noPers\">").text('Personen');
-    inp2 = $("<input type=\"number\" id=\"bea\" />");
+    inp2 = $("<input type=\"number\" id=\"bea\" min=\"0\" max=\"1\" />");
     lb2 = $("<label for=\"bea\">").text('Beamer');
-    inp3 = $("<input type=\"number\" id=\"pc\" />");
+    inp3 = $("<input type=\"number\" id=\"pc\" min=\"0\" max=\"9\" />");
     lb3 = $("<label for=\"pc\">").text('Computer');
     inp4 = $("<input type=\"checkbox\" class=\"checkb\" id=\"teilen\" />");
     lb4 = $("<label for=\"teilen\">").text('Raum teilen');
@@ -193,11 +193,11 @@ saveRoomInfo = function saveRoomInfo(data) {
         //personenanzahl
         room.push($(this).find('pers').text());
         //pc falls vorhanden
-        if ($(this).find('computer').length > 0)
-            room.push($(this).find('computer').text());
-        //beamer falls vorhanden
         if ($(this).find('beamer').length > 0)
             room.push($(this).find('beamer').text());
+        //beamer falls vorhanden
+        if ($(this).find('computer').length > 0)
+            room.push($(this).find('computer').text());
         rooms.push(room);
     });
     Session.set('rooms', rooms);
