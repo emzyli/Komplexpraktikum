@@ -171,6 +171,7 @@ if (Meteor.isClient) {
                      'background-size':'cover'
                  });
          }
+     //hidePic
     }else if(Session.get('toggledCam') == 1){
          Session.set('toggledCam', 0);
          $('#camBtn').css({
@@ -535,6 +536,11 @@ if (Meteor.isClient) {
                 }else if(f == -2) {
                     //Kamera Button ausgrauen, da es keine Bilder für diesen Raum gibt
                     Session.set('toggledCam', 0);
+                    $('#camBtn').css({
+                        'background': "url('icon_kamera.svg') no-repeat",
+                        'background-size' :"125px"
+                    });
+                    $('#kamera label').css('color', '#4defff');
                     $('#kamera').disabled = true;
                     $('#camBtn').css({
                         '-webkit-filter': 'grayscale(100%)',
@@ -723,6 +729,7 @@ if (Meteor.isClient) {
                 Session.set('raum', 66);
                 changeSVG(0, 2, Session.get("position"));
             }
+        //Ebene -2
         }else if(f == -2){
             if(i == 0){
                 Session.set("floor", Session.get("floor") + 1);
