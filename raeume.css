@@ -243,8 +243,7 @@ ul.menuort li.menuel:hover{
     width:100%;
     height:96px;
     text-align: center;
-    background: #fff;
-    opacity: 0.7;
+    background: rgba(255, 255, 255, 0.7);
     visibility: hidden;
 }
 
@@ -319,4 +318,43 @@ ul.menuort li.menuel:hover{
 
 .zoomBarEl:hover {
     color: rgba(0,0,0,0.5);
+}
+
+
+.changeRoom {
+    background: rgba(255, 255, 255, 0.7);
+    height:100%;
+    width:96px;
+    text-align: center;
+    visibility: hidden;
+}
+
+
+.changeRoom#roomR{
+    right: 0px;
+    position: absolute;
+    top: 0px;
+    border-left: 1px solid #666;
+}
+
+.changeRoom#roomL{
+    position: absolute;
+    top: 0px;
+    border-right: 1px solid #666;
+}
+
+#right{
+     margin-top: 715px;
+     background:url('Pfeil.svg') no-repeat;
+     transform:rotate(90deg);
+     background-size: 125px;
+     opacity: 1;
+ }
+
+#left{
+    margin-top: 715px;
+    background:url('Pfeil.svg') no-repeat;
+    transform:rotate(270deg);
+    background-size: 125px;
+    opacity: 1;
 }
