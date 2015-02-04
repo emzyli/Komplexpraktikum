@@ -13,6 +13,9 @@ if (Meteor.isClient) {
     //Ausklappmenue nicht ausgerollt
     Session.setDefault("toggled", 0);
 
+    //Kamera nicht aktiviert
+    Session.setDefault("toggledCam", 0);
+
     //Zoomstufe [0-2]
     // wird in zoomIn, zoomOut verringert/erhoeht
     Session.setDefault("zoomLevel", 0);
@@ -49,7 +52,9 @@ if (Meteor.isClient) {
     //Navigationsbuttons auf Karte
     var upBtn = $('#levelUp');
     upBtn.disabled = true;
-    upBtn.css('cursor', 'default');
+
+    //Zoombuttons
+    $('#out').disabled = true;
 
 
 //Interaktion mit dem Inhalt (SVG-Karten und Buttons)
@@ -117,6 +122,9 @@ if (Meteor.isClient) {
             var id = $(event.target).prop('id');
             Session.set('roomId', $.trim(id)); //ausgewaehlter Raum
             Session.set("position", 2);
+        },
+        'click #kamera' : function(){
+            showPic();
         }
     });
     Template.navi.helpers({
@@ -140,6 +148,46 @@ if (Meteor.isClient) {
         }
     });
 
+ function showPic() {
+     if (Session.get('toggledCam') == 0) {
+            Session.set('toggledCam', 1);
+            var raum = Session.get('raum');
+            var iframe =  $('#frameContent');
+            $('#camBtn').css({
+                'background': "url('icon_kameraRot.svg') no-repeat",
+                'background-size' :"125px"
+            });
+            $('#kamera label').css('color', '#cc0000');
+
+            if (Session.get('floor') == 0) {
+                 iframe.css({
+                     'background': "url('Gruppenraum_0_" + raum + ".jpg') no-repeat",
+                     'background-size':'cover'
+                 });
+            }
+            if (Session.get('floor') == -1) {
+             iframe.css({
+                     'background': "url('Gruppenraum-1_116.jpg') no-repeat",
+                     'background-size':'cover'
+                 });
+         }
+     //hidePic
+    }else if(Session.get('toggledCam') == 1){
+         Session.set('toggledCam', 0);
+         $('#camBtn').css({
+             'background': "url('icon_kamera.svg') no-repeat",
+             'background-size' :"125px"
+         });
+         $('#kamera label').css('color', '#4defff');
+
+         if (Session.get('floor') == 0) {
+             changeSVG(0, 2, Session.get("position"));
+         }
+         if (Session.get('floor') == -1) {
+             changeSVG(-1, 2, Session.get("position"));
+         }
+     }
+ }
 
 //reinZoomen
     function zoomIn() {
@@ -151,7 +199,7 @@ if (Meteor.isClient) {
         else {
             //von Karte zu raum/ins Haus
             if (zlevel == 2) {
-                if(Session.get('position')) {
+                if(Session.get('position') == 1) {
                     //weiter geht es nicht, +Link deaktivieren
                     $('#in').addClass('disabled');
                     $('#in').attr('style', 'opacity: 0.1; cursor: default');
@@ -166,13 +214,13 @@ if (Meteor.isClient) {
                         changeSVG(0, 2, Session.get("position")); ;
 
                     //geh von Campus zu Ebene0
-                }else if (!Session.get('position')) {
+                }else if (Session.get('position') == 0) {
+                    Session.set("zoomLevel", 0);
                     //zommlevel wird auf 0 gesetzt, buttons dementsprechend aktiviert/deaktiviert
                     $('#in').removeClass('disabled');
                     $('#out').addClass('disabled');
                     $('#out').attr('style', 'opacity: 0.1; cursor: default');
-                    zlevel=0;
-                    Session.set("zoomLevel", zlevel);
+
                     changeSVG(0, 3, 0);
                     toggleMenu(0);
                 }
@@ -265,7 +313,6 @@ if (Meteor.isClient) {
     function hideStart() {
         $('#icon').fadeOut("slow");
         $('#start').fadeOut("slow");
-        // $('#start').effect('slide', { direction: 'right', mode: 'hide' });
         $('#content').css('visibility', 'visible').hide().fadeIn('slow');//.css('visibility', 'visible');
         $('nav').css('visibility', 'visible').hide().fadeIn('slow');
     }
@@ -341,11 +388,8 @@ if (Meteor.isClient) {
                 Session.set("zoomLevel", 0);
                 upBtn.disabled = false;
                 downBtn.disabled = true;
-                upBtn.css('cursor', 'default');
-                downBtn.css('cursor', 'pointer');
-
-                tower.css('background', "url('stapel-2.svg') no-repeat");
-                tower.css('background-size', "111px");
+                upBtn.css('cursor', 'pointer');
+                downBtn.css('cursor', 'default');
                 up.css({
                     '-webkit-filter': 'grayscale(0%)',
                     'cursor' : 'pointer'
@@ -354,6 +398,10 @@ if (Meteor.isClient) {
                     '-webkit-filter': 'grayscale(100%)',
                     'cursor' : 'default'
                 });
+
+                tower.css('background', "url('stapel-2.svg') no-repeat");
+                tower.css('background-size', "111px");
+
             }
            //ebene hoch
         } else if (i == 0) {
@@ -365,11 +413,8 @@ if (Meteor.isClient) {
                 Session.set("zoomLevel", 0);
                 upBtn.disabled = true;
                 downBtn.disabled = false;
-                upBtn.css('cursor', 'pointer');
-                downBtn.css('cursor', 'default');
-
-                tower.css('background', "url('stapel.svg') no-repeat");
-                tower.css('background-size', "111px");
+                upBtn.css('cursor', 'default');
+                downBtn.css('cursor', 'pointer');
                 up.css({
                     '-webkit-filter': 'grayscale(100%)',
                     'cursor' : 'default'
@@ -378,6 +423,10 @@ if (Meteor.isClient) {
                     '-webkit-filter': 'grayscale(0%)',
                     'cursor' : 'pointer'
                 });
+
+                tower.css('background', "url('stapel.svg') no-repeat");
+                tower.css('background-size', "111px");
+
 
             } else if (f == -2) {
                 iframe.css('background', "url('ebene-1.svg') no-repeat");
@@ -405,8 +454,21 @@ if (Meteor.isClient) {
            //Raumansicht
         }else if(i==2){
                 if(f==0){
+
+                    $('#kamera').disabled = false;
+                    $('#camBtn').css({
+                        '-webkit-filter': 'grayscale(0%)',
+                        'cursor' : 'pointer'
+                    });
+                    $('#kamera label').css({
+                        '-webkit-filter': 'grayscale(0%)',
+                        'cursor' : 'pointer'
+                    });
+
                     var raum =  Session.get('raum');
-                    iframe.css("background" , "url('raum0."+raum+".svg') no-repeat");
+
+                    if(Session.get('toggledCam')==0){
+                            iframe.css("background" , "url('raum0."+raum+".svg') no-repeat");
                     if(raum == 46 || raum == 42 || raum == 66 ) {
                         iframe.css({
                             "background-size": '100%',
@@ -417,6 +479,12 @@ if (Meteor.isClient) {
                         iframe.css({
                             "background-size": '94%',
                             "background-position": '10px -5px'
+                        });
+                    }
+                    }else {
+                        iframe.css({
+                            'background': "url('Gruppenraum_0_" + raum + ".jpg') no-repeat",
+                            'background-size':'cover'
                         });
                     }
                     //Zoom ausblenden
@@ -431,10 +499,29 @@ if (Meteor.isClient) {
                     changeBtns(2);
                 }
                 else if(f == -1){
-                    iframe.css({"background" : "url('raum-1.116.svg') no-repeat",
-                                "background-size" : '100%',
-                                "background-position": '0px 230px'
+
+                    $('#kamera').disabled = false;
+                    $('#camBtn').css({
+                        '-webkit-filter': 'grayscale(0%)',
+                        'cursor' : 'pointer'
                     });
+                    $('#kamera label').css({
+                        '-webkit-filter': 'grayscale(0%)',
+                        'cursor' : 'pointer'
+                    });
+
+                    if(Session.get('toggledCam')==0) {
+                        iframe.css({
+                            "background": "url('raum-1.116.svg') no-repeat",
+                            "background-size": '100%',
+                            "background-position": '0px 230px'
+                        });
+                    }else{
+                        iframe.css({
+                            'background': "url('Gruppenraum-1_116.jpg') no-repeat",
+                            'background-size':'cover'
+                        });
+                    }
                     //Zoom ausblenden
                     $('#in').css('visibility', 'hidden');
                     $('#out').css('visibility', 'hidden');
@@ -447,6 +534,23 @@ if (Meteor.isClient) {
 
 
                 }else if(f == -2) {
+                    //Kamera Button ausgrauen, da es keine Bilder für diesen Raum gibt
+                    Session.set('toggledCam', 0);
+                    $('#camBtn').css({
+                        'background': "url('icon_kamera.svg') no-repeat",
+                        'background-size' :"125px"
+                    });
+                    $('#kamera label').css('color', '#4defff');
+                    $('#kamera').disabled = true;
+                    $('#camBtn').css({
+                        '-webkit-filter': 'grayscale(100%)',
+                        'cursor' : 'default'
+                    });
+                    $('#kamera label').css({
+                        '-webkit-filter': 'grayscale(100%)',
+                        'cursor' : 'default'
+                    });
+
                     iframe.css({
                         "background": "url('raum-2.115.svg') no-repeat",
                         "background-size": '95%',
@@ -459,10 +563,15 @@ if (Meteor.isClient) {
                     tower.css('background-size', "111px");
                     buttons.css('visibility', 'hidden');
                     buttonsRoom.css('visibility', 'visible');
+                    $('#roomR').css('cursor','default');
+                    $('#right').css({
+                        '-webkit-filter': 'grayscale(100%)',
+                        'cursor' : 'default'
+                    });
                     changeBtns(2);
                 }
-         //zurück Button
-        }else {
+         //zurück Button, Zoom der Stufe 3
+        }else if(i==3){
             //aus Ebenenübersicht
             if (p == 1) {
                 Session.set("position", 0);
@@ -479,7 +588,7 @@ if (Meteor.isClient) {
                 Session.set("position", 1);
                 Session.set("zoomLevel", 0);
                 iframe.css({
-                    'background-size': "100%",
+                    'background-size': "cover",
                     'background': "url('Ebene0.svg') no-repeat"
 
                 });
@@ -501,7 +610,20 @@ if (Meteor.isClient) {
                         'background': "url('Ebene0.svg') no-repeat",
                         'background-size' : "100%"
                     });
+
                     buttons.css('visibility', 'visible');
+                    upBtn.disabled = true;
+                    downBtn.disabled = false;
+                    upBtn.css('cursor', 'default');
+                    downBtn.css('cursor', 'pointer');
+                    up.css({
+                        '-webkit-filter': 'grayscale(100%)',
+                        'cursor' : 'default'
+                    });
+                    down.css({
+                        '-webkit-filter': 'grayscale(0%)',
+                        'cursor' : 'pointer'
+                    });
                     buttonsRoom.css('visibility', 'hidden');
                 }
                 else if(f == -1){
@@ -522,6 +644,7 @@ if (Meteor.isClient) {
                         'background-position' : '0px 100px',
                         'background-size': "cover"
                     });
+
                    // iframe.css('background-size', "100%");
                     buttons.css('visibility', 'visible');
                     buttonsRoom.css('visibility', 'hidden');
@@ -543,6 +666,8 @@ if (Meteor.isClient) {
                 if(r == 66){
                     Session.set("floor", Session.get("floor") - 1);
                     changeSVG(-1, 2, Session.get("position"));
+
+
                 }else if(r == 40){
                     Session.set("raum", 66);
                     changeSVG(0, 2, Session.get("position"));
@@ -604,6 +729,7 @@ if (Meteor.isClient) {
                 Session.set('raum', 66);
                 changeSVG(0, 2, Session.get("position"));
             }
+        //Ebene -2
         }else if(f == -2){
             if(i == 0){
                 Session.set("floor", Session.get("floor") + 1);
