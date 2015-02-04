@@ -99,9 +99,10 @@ if (Meteor.isClient) {
         'click div#info': function () {
             toggleMenu("info");
         },
-        'click ul.ort li.menuel': function () { //wir kommen in Raumansicht
+        'click ul.menuort li.menuel': function (event) { //wir kommen in Raumansicht
+            var id = $(event.target).prop('id');
+            Session.set('roomId', $.trim(id)); //ausgewaehlter Raum
             Session.set("position", 2);
-            Session.set('roomId', $(this).attr('id')); //ausgewaehlter Raum
         }
     });
     Template.navi.helpers({
@@ -364,12 +365,14 @@ if (Meteor.isClient) {
             $('#backBtn').css('transform', 'scaleX(1)');
             $('#filter').css('visibility', 'visible');
             $('#info').css('visibility', 'hidden');
+            $('#kamera').css('visibility', 'hidden');
             $('.tower').css('visibility', 'visible');
         }
         if (!p) {
             $('#backBtn').css('transform', 'scaleX(-1)');
             $('#filter').css('visibility', 'hidden');
             $('#info').css('visibility', 'hidden');
+            $('#kamera').css('visibility', 'hidden');
             $('.tower').css('visibility', 'hidden');
         }
     }
@@ -462,11 +465,12 @@ if (Meteor.isClient) {
                     iframe.css('background-position', '0 230px');
                 }
          }else {
-            if (p) {
+            if (p == 1) {
                 Session.set("position", 0);
                 Session.set("zoomLevel", 0);
                 iframe.css('background', "url('map1.svg') no-repeat");
                 buttons.css('visibility', 'hidden');
+                changeBtns(1);
             } else {
                 Session.set("position", 1);
                 Session.set("zoomLevel", 0);
@@ -475,9 +479,6 @@ if (Meteor.isClient) {
                 buttons.css('visibility', 'visible');
             }
         }
-
-        //http://stackoverflow.com/questions/2424191/how-to-make-a-element-draggable-use-jquery
-        //draggable fkt //geht noch nicht
 
     }
 

@@ -54,7 +54,7 @@ toggleMenuContent = function toggleMenuContent(btnType) {
                 success: function (data) {
                     switch (btnType) {
                         case 'info': showRoomInfo(Session.get('roomId'), data); break;
-                        case 'bibos': fillList(data); break;
+                        case 'bibos': fillList(data, 'bibos'); break;
                         case 'ort': get_fRooms(data); break; //falls Rauminfo schon gespeichert                        
                     }
                 }
@@ -85,8 +85,9 @@ updateList = function updateList(list) {
 
 
 //fuelle Menue
-fillList = function fillList(xmlFile) {
-    var list = $('<ul>').attr('id', 'menuList'); list.addClass(($(xmlFile).find(":root")).tagName);
+fillList = function fillList(xmlFile, btnType) {
+    var list = $('<ul>').attr('id', 'menuList');
+    list.addClass('menu'+btnType); //class hinzu fuer css anpassung der liste
     var entries = $(xmlFile).find('entry');
 
     //fuer jeden Entry Listelemente einfuegen
@@ -207,7 +208,7 @@ showRoomInfo = function showRoomInfo(roomId, data) {
     $(data).find('entry').each(
         function(){
             if($(this).find('id').eq(roomId))
-                fillList($(this)); return;
+                fillList($(this), 'info'); return;
         });    
 }
 
@@ -247,20 +248,22 @@ function get_fRooms(data) {
         var entry = $('<entry />');
         entry.append('<eintrag>Keine den Kriterien</eintrag><eintrag>entsprechenden R&auml;ume</eintrag><eintrag>gefunden</eintrag>');
         fRooms = $('<XMLDocument />').append(entry);
-        fillList(fRooms);
+        fillList(fRooms, 'ort');
     }
     else {
         var roomsXml = $('<XMLDocument />');
-        var entry = $('<entry />');
+        var ort = $('<ort />');        
         for (var i = 0; i < fRooms.length; i++) {
+            var entry = $('<entry />');
             $(data).find('eintrag').each(
              function () {
                  if ($.trim(($(this).text())) == 'Raum ' + fRooms[i][0])
                      entry.append($(this));
              });
-        }
-        roomsXml.append(entry);
-        fillList(roomsXml);
+            ort.append(entry);
+        }    
+        roomsXml.append(ort);
+        fillList(roomsXml, 'ort');
     }
 }
 
