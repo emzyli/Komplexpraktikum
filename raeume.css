@@ -33,7 +33,9 @@ nav {
     position: absolute;
     top:0px;
 }
-
+nav label{
+    cursor: pointer;
+}
 section div#content {
     position: absolute;
     top:0px;
@@ -58,7 +60,7 @@ section div#content {
   /*  position: absolute;*/
     /*  overflow: auto;*/
 }
-#frameContent
+
 .buttonPosition {
     padding-top: 10px;
     height:171px;
@@ -251,6 +253,7 @@ ul.menuort li.menuel:hover{
     position: absolute;
     top: 0px;
     border-bottom: 1px solid #666;
+    cursor: default;
 }
 
 .levelBtn#levelDown {
@@ -278,6 +281,7 @@ ul.menuort li.menuel:hover{
     opacity: 1;
     -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
+    cursor: default;
 }
 
 #down {
@@ -320,7 +324,10 @@ ul.menuort li.menuel:hover{
     color: rgba(0,0,0,0.5);
 }
 
-
+#out{
+    opacity: 0.1;
+    cursor: default;
+}
 .changeRoom {
     background: rgba(255, 255, 255, 0.7);
     height:100%;
@@ -344,7 +351,7 @@ ul.menuort li.menuel:hover{
 }
 
 #right{
-     margin-top: 715px;
+     margin-top: 693px;
      margin-left: -35px;
      background:url('Pfeil.svg') no-repeat;
      transform:rotate(90deg);
@@ -353,7 +360,7 @@ ul.menuort li.menuel:hover{
  }
 
 #left{
-    margin-top: 715px;
+    margin-top: 693px;
     margin-left: 5px;
     background:url('Pfeil.svg') no-repeat;
     transform:rotate(270deg);
