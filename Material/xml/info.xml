@@ -8,7 +8,7 @@
 <entry>
 	<id>0.41</id>
 	<heading>Kapazität</heading>
-	<pers>3+3</pers>
+	<pers>3</pers>
 	<heading>Ausstattung</heading>
 	<computer>1</computer>
 </entry>
@@ -30,14 +30,6 @@
 	<heading>Kapazität</heading>
 	<pers>10</pers>
 	<heading>Ausstattung</heading>
-	<beamer>1</beamer>
-</entry>
-<entry>
-	<id>0.47</id>
-	<heading>Kapazität</heading>
-	<pers>15</pers>
-	<heading>Ausstattung</heading>
-	<computer>9</computer>
 	<beamer>1</beamer>
 </entry>
 <entry>

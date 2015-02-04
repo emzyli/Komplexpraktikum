@@ -93,28 +93,26 @@ fillList = function fillList(xmlFile, btnType) {
     //fuer jeden Entry Listelemente einfuegen
     //entry<heading(*), eintrag(*)>            
     entries.each(function () {
-        //heading falls vorhanden
-        if ($(this).find('heading').length > 0) {
-            liH = $('<li>').addClass('heading');
-            liH.html($(this).find('heading').text());
-            list.append(liH);
-        }
-        //id falls vorhanden
-        if ($(this).find('id').length > 0) {
-            liH = $('<li>').addClass('menuel');
-            liH.html($(this).find('id').text());
-            list.append(liH);
-        }
-        //eintraege falls vorhanden
-        if ($(this).find('eintrag').length > 0) {
-            liEList = $(this).find('eintrag');
-            liEList.each(function () {
-                liE = $('<li>').addClass('menuel');
-                liE.html($(this).text());
-                liE.attr('id', $(this).text().substr(8, $(this).text().length-1)); //damit Raumnummer als Id hinzugefuegt wird
-                list.append(liE);
-            });
-        }
+        var kids = $(this).prop('children');
+        if (btnType != 'info') {
+            for (var i = 0; i < kids.length; i++) { //fuer jeden Kindknoten
+                //heading falls vorhanden
+                var kName = kids.item(i).nodeName;
+                if (kName == 'heading') {
+                    liH = $('<li>').addClass('heading');
+                    liH.html(kids.item(i).innerHTML);
+                    list.append(liH);
+                }
+                else {
+                    liE = $('<li>').addClass('menuel');
+                    liE.html(kids.item(i).innerHTML);
+                    var txt = kids.item(i).innerText || kids.item(i).textContent;
+                    liE.attr('id', $.trim(txt.substr(8, txt.length - 1))); //damit Raumnummer als Id hinzugefuegt wird
+                    list.append(liE);
+                }
+            }
+        } 
+
     });
     updateList(list);
 }
@@ -205,11 +203,15 @@ saveRoomInfo = function saveRoomInfo(data) {
 
 //zeigt die Informationen fuer den ausgewaehlten Raum in ul an (hole Raum per Id)
 showRoomInfo = function showRoomInfo(roomId, data) {
+    var xmlFile = $('<XMLDocument />');
     $(data).find('entry').each(
         function(){
-            if($(this).find('id').eq(roomId))
-                fillList($(this), 'info'); return;
-        });    
+            var id = $(this).find('id').text();
+            if (id == roomId) {
+                xmlFile.append($(this));
+            }
+        });
+    fillList(xmlFile, 'info');
 }
 
 //gibt Raum-Index in rooms mit roomId zurueck 
@@ -252,17 +254,27 @@ function get_fRooms(data) {
     }
     else {
         var roomsXml = $('<XMLDocument />');
-        var ort = $('<ort />');        
+        var ortT = $('<ort />');        
         for (var i = 0; i < fRooms.length; i++) {
             var entry = $('<entry />');
-            $(data).find('eintrag').each(
-             function () {
-                 if ($.trim(($(this).text())) == 'Raum ' + fRooms[i][0])
-                     entry.append($(this));
-             });
-            ort.append(entry);
-        }    
-        roomsXml.append(ort);
+            $(data).find('entry').each(function () { //fuer jeden Entry
+                var tempEnt = $('<text />');
+                var heading = $(this).find('heading');
+                $(this).find('eintrag').each(
+                 function () {
+                     if ($.trim(($(this).text())) == 'Raum ' + fRooms[i][0]) {
+                         tempEnt.append($(this));
+                     }
+                 });
+                if ($(tempEnt).prop('children').length > 0) {
+                    entry.append(heading); //Ueberschrift
+                    entry.append(tempEnt); //Inhalt
+                }
+                        
+            });
+            ortT.append(entry);
+        }
+        roomsXml.append(ortT);
         fillList(roomsXml, 'ort');
     }
 }
