@@ -345,6 +345,7 @@ ul.menuort li.menuel:hover{
 
 #right{
      margin-top: 715px;
+     margin-left: -35px;
      background:url('Pfeil.svg') no-repeat;
      transform:rotate(90deg);
      background-size: 125px;
@@ -353,6 +354,7 @@ ul.menuort li.menuel:hover{
 
 #left{
     margin-top: 715px;
+    margin-left: 5px;
     background:url('Pfeil.svg') no-repeat;
     transform:rotate(270deg);
     background-size: 125px;

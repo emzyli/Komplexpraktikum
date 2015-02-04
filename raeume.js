@@ -29,6 +29,7 @@ if (Meteor.isClient) {
 
     //Filterkriterien {pers[2,20], beamer[0,1], computer[0,1], teilen[0,1]}
     Session.setDefault("filterList", [2, 0, 0, false]);
+
     //background-position X und Y
     Session.setDefault("bgx", 0);
     Session.setDefault("bgy", 0);
@@ -40,6 +41,7 @@ if (Meteor.isClient) {
     Session.setDefault("upY", 0);
     //prüfe ob grad gedraggt wird
     Session.setDefault('dragging', false)
+
     //Navigationsbuttons auf Karte
     var upBtn = $('#levelUp');
     upBtn.disabled = true;
@@ -77,13 +79,13 @@ if (Meteor.isClient) {
         'click div#levelUp' : function() {
             changeSVG(Session.get("floor"), 0, 1);
         },
-      //TODO:
-      /*  'click div#roomR' : function() {
-            changeSVG(Session.get("floor"), 1, 1);
+
+        'click div#roomR' : function() {
+            changeRoom(Session.get("floor"), 1, 0);
         },
         'click div#roomL' : function() {
-            changeSVG(Session.get("floor"), 0, 1);
-        },*/
+            changeRoom(Session.get("floor"), 0, 0);
+        },
         'click a#in': function () {
             zoomIn();
         },
@@ -94,7 +96,7 @@ if (Meteor.isClient) {
     //Interaktion mit der NaviLeiste
     Template.navi.events({
         'click div#first': function () {
-            changeSVG(0, 3, Session.get("position"));
+            changeSVG( Session.get("floor"), 3, Session.get("position"));
             toggleMenu(0);
         },
         'click div#ort': function () {
@@ -133,18 +135,6 @@ if (Meteor.isClient) {
         }
     });
 
-//in den Raum zoomen
-    function zoomRoom(x, y){
-
-        $('#frameContent').css({//"background-size" : '800%',
-            "background-position": '-'+(x-550)+'px -'+(y)+'px'});
-
-        Session.set("zoomLevel", 3);
-        $('#out').removeClass('disabled');
-        $('#out').attr('style', 'opacity: 1; cursor: pointer');
-        return;
-    }
-
 
 //reinZoomen
     function zoomIn() {
@@ -154,11 +144,13 @@ if (Meteor.isClient) {
 
         }
         else {
+            //von Karte zu raum/ins Haus
             if (zlevel == 2) {
                 if(Session.get('position')) {
                     //weiter geht es nicht, +Link deaktivieren
                     $('#in').addClass('disabled');
                     $('#in').attr('style', 'opacity: 0.1; cursor: default');
+                    Session.set("position", 2);
 
                     if (Session.get('floor') == -1) {
                         changeSVG(-1, 2, Session.get("position"));
@@ -184,7 +176,7 @@ if (Meteor.isClient) {
                 //weiter geht es nicht, +Link deaktivieren
               //  $('#in').addClass('disabled');
                // $('#in').attr('style', 'opacity: 0.1; cursor: default');
-                if(!Session.get('position'))
+                if(Session.get('position') == 0)
                         $('#frameContent').css("background-position", '-1500px -1250px');
                 if(Session.get('floor')== -1)
                     $('#frameContent').css("background-position", '-700px -150px');
@@ -230,33 +222,39 @@ if (Meteor.isClient) {
                 $('#out').addClass('disabled');
                 $('#out').attr('style', 'opacity: 0.1; cursor: default');
 
-                if(!Session.get('position')) {
-                    $('#frameContent').css("background-position", '0px 0px');
-                    $('#frameContent').css("background-size", 'cover');
-                }
-                if(Session.get("floor") == -1){
-                   // $('#frameContent').css('background-size', "120%");
-                }
+                $('#frameContent').css({
+                        'background-position' : '0px 0px',
+                        "background-size" : 'cover'
+                });
+                if(Session.get('floor')==-2)
+                    $('#frameContent').css({
+                        'background-position' : '0px 100px',
+                        "background-size" : 'cover'
+                });
             }
             if (zlevel == 2) {
                 //wieder hineinzoomen mgl, +Link aktivieren
                 $('#in').removeClass('disabled');
                 $('#in').attr('style', 'opacity: 1; cursor: pointer');
+                $('#frameContent').css("background-size", (zlevel) * 100 + '%');
 
-                //Zoom in Campuskarte
-                if(!Session.get('position')) {
+                //Zoom aus Campuskarte
+                if(Session.get('position') == 0)
                     $('#frameContent').css("background-position", '-500px -500px');
-                }
-
-
+                if(Session.get('floor')== 0 && Session.get('position')==1)
+                    $('#frameContent').css( "background-position",'-200px -300px');
+                if(Session.get('floor')== -1)
+                    $('#frameContent').css("background-position",'-100px -150px');
+                if(Session.get('floor')== -2)
+                    $('#frameContent').css("background-position", '-500px 500px');
             }
+
             zlevel--;
             Session.set("zoomLevel", zlevel);
-            $('#frameContent').css("background-size", (zlevel + 1) * 100 + '%');
             $('#frameContent').css("-webkit-transform:", "scale(0.4)");
             $('#frameContent').css("-moz-transform:", "scale(0.4)");
         }
-        S}
+        }
 
     //schließt Anfangsbild
     function hideStart() {
@@ -294,13 +292,11 @@ if (Meteor.isClient) {
     //ändert Karte und Turm
     // @param f: Ebene
     // @param i: ist 1 bei down und 0 bei up und 2 bei zoom=3
-    // @param p: aktuelle Position: 0..Campus, 1..SLUB
+    // @param p: aktuelle Position: 0..Campus, 1..SLUB, 2..Raum
     function changeSVG(f, i, p) {
         var tower = $('#tower');
         var upBtn = $('#levelUp');
         var up = $('#up');
-        var rightBtn = $('#right');
-        var leftBtn = $('#left');
         var downBtn = $('#levelDown');
         var down = $('#down');
         var iframe = $('#frameContent');
@@ -323,7 +319,6 @@ if (Meteor.isClient) {
                 down.css('-webkit-filter', 'grayscale(0%)');
             } else if (f == -1) {
                 iframe.css('background', "url('ebene-2.svg') no-repeat");
-             //   iframe.css('background-position', "cover");
                 iframe.css('background-position-y', "100px");
                 iframe.css('background-size', "120%");
 
@@ -338,7 +333,7 @@ if (Meteor.isClient) {
                 up.css('-webkit-filter', 'grayscale(0%)');
                 down.css('-webkit-filter', 'grayscale(100%)');
             }
-            //ebene hoch
+           //ebene hoch
         } else if (i == 0) {
             if (f == -1) {
                 iframe.css('background', "url('Ebene0.svg') no-repeat");
@@ -368,15 +363,19 @@ if (Meteor.isClient) {
                 up.css('-webkit-filter', 'grayscale(0%)');
                 down.css('-webkit-filter', 'grayscale(0%)');
             }
-            //Raumansicht
+           //Raumansicht
         }else if(i==2){
                 if(f==0);
                 else if(f == -1){
-              //      iframe.css('background', "url('raum-1.116.svg') no-repeat");
                     iframe.css({"background" : "url('raum-1.116.svg') no-repeat",
                                 "background-size" : '100%',
                                 "background-position": '0px 230px'
                     });
+                    //Zoom ausblenden
+                    $('#in').css('visibility', 'hidden');
+                    $('#out').css('visibility', 'hidden');
+                    tower.css('background', "url('stapel-1.svg') no-repeat");
+                    tower.css('background-size', "111px");
                     buttons.css('visibility', 'hidden');
                     buttonsRoom.css('visibility', 'visible');
                     $('#content').css({'background-color': '#FFF'});
@@ -384,43 +383,129 @@ if (Meteor.isClient) {
 
 
                 }else if(f == -2) {
-                    //   iframe.css('background', "url('raum-2.115.svg') no-repeat");
                     iframe.css({
                         "background": "url('raum-2.115.svg') no-repeat",
                         "background-size": '95%',
                         "background-position": '20px -20px'
                     });
-                    //Ursprünglich: #ECECEC
+                    //Zoom ausblenden
+                    $('#in').css('visibility', 'hidden');
+                    $('#out').css('visibility', 'hidden');
+                    tower.css('background', "url('stapel-2.svg') no-repeat");
+                    tower.css('background-size', "111px");
                     buttons.css('visibility', 'hidden');
                     buttonsRoom.css('visibility', 'visible');
-                    $('#content').css({'background-color': '#FFF'});
                     changeBtns(2);
                 }
+         //zurück Button
         }else {
+            //aus Ebenenübersicht
             if (p == 1) {
                 Session.set("position", 0);
                 Session.set("zoomLevel", 0);
-                iframe.css('background', "url('map1.svg') no-repeat");
+                iframe.css({
+                    'background':"url('map1.svg') no-repeat",
+                    'background-size' : 'cover'
+                });
                 buttons.css('visibility', 'hidden');
                 changeBtns(1);
-            } else {
+
+             //aus Campusplan in den Ebenenplan
+            } else if(p == 0) {
                 Session.set("position", 1);
                 Session.set("zoomLevel", 0);
-                iframe.css('background', "url('Ebene0.svg') no-repeat");
-                iframe.css('background-size', "100%");
+                iframe.css({
+                    'background-size': "100%",
+                    'background': "url('Ebene0.svg') no-repeat"
+
+                });
                 buttons.css('visibility', 'visible');
+
+             //aus Raum in den Ebenenplan
+            }else if(p == 2){
+                Session.set("position", 1);
+                Session.set("zoomLevel", 0);
+                $('#in').css('visibility', 'visible');
+                $('#in').removeClass('disabled');
+                $('#in').attr('style', 'opacity: 1; cursor: pointer');
+                $('#out').css('visibility', 'visible');
+                $('#out').addClass('disabled');
+                $('#out').attr('style', 'opacity: 0.1; cursor: default');
+
+                if (f == 0) {
+                    iframe.css({
+                        'background': "url('Ebene0.svg') no-repeat",
+                        'background-size' : "100%"
+                    });
+                    buttons.css('visibility', 'visible');
+                    buttonsRoom.css('visibility', 'hidden');
+                }
+                else if(f == -1){
+                    Session.set("zoomLevel", 0);
+
+                    iframe.css({
+                        'background': "url('ebene-1.svg') no-repeat",
+                        'background-size': "cover"
+                    });
+                  //  iframe.css('background-size', "100%");
+                    buttons.css('visibility', 'visible');
+                    buttonsRoom.css('visibility', 'hidden');
+                }
+                else if(f == -2){
+                    Session.set("zoomLevel", 0);
+                    iframe.css({
+                        'background': "url('ebene-2.svg') no-repeat",
+                        'background-size': "cover"
+                    });
+                   // iframe.css('background-size', "100%");
+                    buttons.css('visibility', 'visible');
+                    buttonsRoom.css('visibility', 'hidden');
+                }
             }
         }
 
     }
 
+    // @param f: Ebene
+    // @param i: ist 1 bei rechts und 0 bei links
+    // @param r: aktueller Raum (nur bei Ebene 0 wichtig), 1..Raum links außen,...
+    function changeRoom(f, i, p){
+        var right = $('#right');
+        var left = $('#left');
+        if(f == 0);
+        else if (f == -1){
+            Session.set("floor", Session.get("floor") - 1);
+            if(i == 1){
+                right.css({
+                    '-webkit-filter': 'grayscale(100%)',
+                    'cursor':'default'
+                });
+                left.css('-webkit-filter', 'grayscale(0%)');
+                changeSVG(-2, 2, Session.get("position"));
+            }else{
 
+            }
+        }else if(f == -2){
+            Session.set("floor", Session.get("floor") + 1);
+            if(i == 0){
+                right.css({
+                    '-webkit-filter': 'grayscale(0%)',
+                    'cursor':'pointer'
+                });
+                left.css('-webkit-filter', 'grayscale(0%)');
+                changeSVG(-1, 2, Session.get("position"));
+            }else{
+
+            }
+        }
+    }
+
+
+    /*ES GEHT NCIHT!!!!!!!*/
     function drag(){
         /*  so will es nicht...
          var myPosX = $('#frameContent').css("background-position-x");
          var myPosY = $('#frameContent').css("background-position-y");*/
-
-        /*ES GEHT NCIHT!!!!!!!*/
 
         //x2-x1 und y2-y1
         var deltaX =Session.get('upX')-Session.get('downX');
@@ -521,6 +606,18 @@ if (Meteor.isClient) {
             }
         }
     }
+    //in den Raum zoomen
+    function zoomRoom(x, y){
+
+        $('#frameContent').css({//"background-size" : '800%',
+            "background-position": '-'+(x-550)+'px -'+(y)+'px'});
+
+        Session.set("zoomLevel", 3);
+        $('#out').removeClass('disabled');
+        $('#out').attr('style', 'opacity: 1; cursor: pointer');
+        return;
+    }
+
     if (Meteor.isServer) {
         Meteor.startup(function () {
             // code to run on server at startup
