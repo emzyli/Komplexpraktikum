@@ -42,9 +42,14 @@ if (Meteor.isClient) {
     //prüfe ob grad gedraggt wird
     Session.setDefault('dragging', false)
 
+    //Raum in ebene0 46...ganz links, 66...ganz rechts
+    // räume mitte: 40-43von rechts nach inks
+    Session.setDefault('raum', 43);
+
     //Navigationsbuttons auf Karte
     var upBtn = $('#levelUp');
     upBtn.disabled = true;
+    upBtn.css('cursor', 'default');
 
 
 //Interaktion mit dem Inhalt (SVG-Karten und Buttons)
@@ -81,10 +86,10 @@ if (Meteor.isClient) {
         },
 
         'click div#roomR' : function() {
-            changeRoom(Session.get("floor"), 1, 0);
+            changeRoom(Session.get("floor"), 1, Session.get('raum'));
         },
         'click div#roomL' : function() {
-            changeRoom(Session.get("floor"), 0, 0);
+            changeRoom(Session.get("floor"), 0,  Session.get('raum'));
         },
         'click a#in': function () {
             zoomIn();
@@ -158,7 +163,7 @@ if (Meteor.isClient) {
                     if (Session.get('floor') == -2)
                         changeSVG(-2, 2, Session.get("position"));
                     if (Session.get('floor') == 0)
-                        $('#frameContent').css("background-position", '-1100px -600px');
+                        changeSVG(0, 2, Session.get("position")); ;
 
                     //geh von Campus zu Ebene0
                 }else if (!Session.get('position')) {
@@ -312,11 +317,20 @@ if (Meteor.isClient) {
                 Session.set("floor", Session.get("floor") - 1);
                 Session.set("zoomLevel", 0);
                 upBtn.disabled = downBtn.disabled = false;
+                upBtn.css('cursor', 'pointer');
+                downBtn.css('cursor', 'pointer');
 
                 tower.css('background', "url('stapel-1.svg') no-repeat");
                 tower.css('background-size', "111px");
-                up.css('-webkit-filter', 'grayscale(0%)');
-                down.css('-webkit-filter', 'grayscale(0%)');
+
+                up.css({
+                    '-webkit-filter': 'grayscale(0%)',
+                    'cursor' : 'pointer'
+                });
+                down.css({
+                    '-webkit-filter': 'grayscale(0%)',
+                    'cursor' : 'pointer'
+                });
             } else if (f == -1) {
                 iframe.css('background', "url('ebene-2.svg') no-repeat");
                 iframe.css('background-position-y', "100px");
@@ -327,11 +341,19 @@ if (Meteor.isClient) {
                 Session.set("zoomLevel", 0);
                 upBtn.disabled = false;
                 downBtn.disabled = true;
+                upBtn.css('cursor', 'default');
+                downBtn.css('cursor', 'pointer');
 
                 tower.css('background', "url('stapel-2.svg') no-repeat");
                 tower.css('background-size', "111px");
-                up.css('-webkit-filter', 'grayscale(0%)');
-                down.css('-webkit-filter', 'grayscale(100%)');
+                up.css({
+                    '-webkit-filter': 'grayscale(0%)',
+                    'cursor' : 'pointer'
+                });
+                down.css({
+                    '-webkit-filter': 'grayscale(100%)',
+                    'cursor' : 'default'
+                });
             }
            //ebene hoch
         } else if (i == 0) {
@@ -343,11 +365,19 @@ if (Meteor.isClient) {
                 Session.set("zoomLevel", 0);
                 upBtn.disabled = true;
                 downBtn.disabled = false;
+                upBtn.css('cursor', 'pointer');
+                downBtn.css('cursor', 'default');
 
                 tower.css('background', "url('stapel.svg') no-repeat");
                 tower.css('background-size', "111px");
-                up.css('-webkit-filter', 'grayscale(100%)');
-                downBtn.css('-webkit-filter', 'grayscale(0%)');
+                up.css({
+                    '-webkit-filter': 'grayscale(100%)',
+                    'cursor' : 'default'
+                });
+                down.css({
+                    '-webkit-filter': 'grayscale(0%)',
+                    'cursor' : 'pointer'
+                });
 
             } else if (f == -2) {
                 iframe.css('background', "url('ebene-1.svg') no-repeat");
@@ -357,15 +387,49 @@ if (Meteor.isClient) {
                 Session.set("floor", Session.get("floor") + 1);
                 Session.set("zoomLevel", 0);
                 upBtn.disabled = downBtn.disabled = false;
+                upBtn.css('cursor', 'pointer');
+                downBtn.css('cursor', 'pointer');
 
                 tower.css('background', "url('stapel-1.svg') no-repeat");
                 tower.css('background-size', "111px");
-                up.css('-webkit-filter', 'grayscale(0%)');
-                down.css('-webkit-filter', 'grayscale(0%)');
+
+                up.css({
+                    '-webkit-filter': 'grayscale(0%)',
+                    'cursor' : 'pointer'
+                });
+                down.css({
+                    '-webkit-filter': 'grayscale(0%)',
+                    'cursor' : 'pointer'
+                });
             }
            //Raumansicht
         }else if(i==2){
-                if(f==0);
+                if(f==0){
+                    var raum =  Session.get('raum');
+                    iframe.css("background" , "url('raum0."+raum+".svg') no-repeat");
+                    if(raum == 46 || raum == 42 || raum == 66 ) {
+                        iframe.css({
+                            "background-size": '100%',
+                            "background-position": '0px 230px'
+                        });
+                    }
+                    if(raum == 40){
+                        iframe.css({
+                            "background-size": '94%',
+                            "background-position": '10px -5px'
+                        });
+                    }
+                    //Zoom ausblenden
+                    $('#in').css('visibility', 'hidden');
+                    $('#out').css('visibility', 'hidden');
+
+                    tower.css('background', "url('stapel.svg') no-repeat");
+                    tower.css('background-size', "111px");
+                    buttons.css('visibility', 'hidden');
+                    buttonsRoom.css('visibility', 'visible');
+                    $('#content').css({'background-color': '#FFF'});
+                    changeBtns(2);
+                }
                 else if(f == -1){
                     iframe.css({"background" : "url('raum-1.116.svg') no-repeat",
                                 "background-size" : '100%',
@@ -455,6 +519,7 @@ if (Meteor.isClient) {
                     Session.set("zoomLevel", 0);
                     iframe.css({
                         'background': "url('ebene-2.svg') no-repeat",
+                        'background-position' : '0px 100px',
                         'background-size': "cover"
                     });
                    // iframe.css('background-size', "100%");
@@ -469,27 +534,84 @@ if (Meteor.isClient) {
     // @param f: Ebene
     // @param i: ist 1 bei rechts und 0 bei links
     // @param r: aktueller Raum (nur bei Ebene 0 wichtig), 1..Raum links außen,...
-    function changeRoom(f, i, p){
+    function changeRoom(f, i, r){
         var right = $('#right');
         var left = $('#left');
-        if(f == 0);
+        if(f == 0){
+            //Ebene0 nach rechts
+            if(i == 1) {
+                if(r == 66){
+                    Session.set("floor", Session.get("floor") - 1);
+                    changeSVG(-1, 2, Session.get("position"));
+                }else if(r == 40){
+                    Session.set("raum", 66);
+                    changeSVG(0, 2, Session.get("position"));
+                }else if(r == 46){
+                    Session.set("raum", 43);
+                    changeSVG(0, 2, Session.get("position"));
+                    //es kann wieder nach links gklickt werden
+                    left.css({
+                        '-webkit-filter': 'grayscale(0%)',
+                        'cursor':'pointer'
+                    });
+                    $('#roomL').css({
+                        'cursor':'pointer'
+                    });
+                }else{
+                    Session.set("raum", Session.get("raum")-1);
+                    changeSVG(0, 2, Session.get("position"));
+                }
+
+            //Ebene0 nach links
+            }else {
+                if(r == 46){
+                }
+                else if (r == 66) {
+                    Session.set("raum", 40);
+                    changeSVG(0, 2, Session.get("position"));
+                }else if (r == 43) {
+                    Session.set("raum", 46);
+                    changeSVG(0, 2, Session.get("position"));
+
+                    //geht nicht weiter, desktiviere button nach links
+                    left.css({
+                        '-webkit-filter': 'grayscale(100%)',
+                        'cursor': 'default'
+                    });
+                    $('#roomL').css({
+                        'cursor':'default'
+                    });
+                }else{
+                    Session.set("raum", Session.get("raum")+1);
+                    changeSVG(0, 2, Session.get("position"));
+                }
+            }
+        }//Ebene -1
         else if (f == -1){
-            Session.set("floor", Session.get("floor") - 1);
             if(i == 1){
+                Session.set("floor", Session.get("floor") - 1);
                 right.css({
                     '-webkit-filter': 'grayscale(100%)',
+                    'cursor':'default'
+                });
+                $('#roomR').css({
                     'cursor':'default'
                 });
                 left.css('-webkit-filter', 'grayscale(0%)');
                 changeSVG(-2, 2, Session.get("position"));
             }else{
-
+                Session.set("floor", Session.get("floor") + 1);
+                Session.set('raum', 66);
+                changeSVG(0, 2, Session.get("position"));
             }
         }else if(f == -2){
-            Session.set("floor", Session.get("floor") + 1);
             if(i == 0){
+                Session.set("floor", Session.get("floor") + 1);
                 right.css({
                     '-webkit-filter': 'grayscale(0%)',
+                    'cursor':'pointer'
+                });
+                $('#roomR').css({
                     'cursor':'pointer'
                 });
                 left.css('-webkit-filter', 'grayscale(0%)');
