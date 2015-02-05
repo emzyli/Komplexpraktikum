@@ -104,7 +104,15 @@ fillList = function fillList(xmlFile, btnType) {
             }
             else {
                 liE = $('<li>').addClass('menuel');
-                liE.html(kids.item(i).innerHTML);
+                if (btnType == 'info') { //fuer schoenere Darstellung
+                    switch (i) {
+                        case 0: 'Raum ' + liE.html(kids.item(i).innerHTML); break;
+                        case 2: liE.html(kids.item(i).innerHTML + ' Personen'); break;
+                        case 4: liE.html(kids.item(i).innerHTML + ' PC'); break;
+                        case 5: liE.html(kids.item(i).innerHTML + ' Beamer'); break;
+                    }
+                }
+                else { liE.html(kids.item(i).innerHTML); }
                 var txt = kids.item(i).innerText || kids.item(i).textContent;
                 liE.attr('id', $.trim(txt.substr(8, txt.length - 1))); //damit Raumnummer als Id hinzugefuegt wird
                 list.append(liE);

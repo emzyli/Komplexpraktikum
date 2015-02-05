@@ -794,6 +794,7 @@ if (Meteor.isClient) {
                     changeSVG(0, 2, Session.get("position"));
                 }
             }
+            Session.set("roomId", Session.get('raum'));
         }//Ebene -1
         else if (f == -1){
             if(i == 1){
@@ -829,6 +830,7 @@ if (Meteor.isClient) {
 
             }
         }
+        
     }
 
 
