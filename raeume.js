@@ -355,6 +355,8 @@ if (Meteor.isClient) {
         var iframe = $('#frameContent');
         var buttons = $('.levelBtn');
         var buttonsRoom = $('.changeRoom');
+        var right = $('#right');
+        var left = $('#left');
         //ebene runter
         if (i == 1) {
             if (f == 0) {
@@ -461,16 +463,39 @@ if (Meteor.isClient) {
                      if(raum == '-1.116'){
                          Session.set("floor", -1);
                          Session.set('raum', -1.116);
+
+                         right.css({ '-webkit-filter': 'grayscale(0%)',  'cursor':'pointer' });
+                         $('#roomR').css({ 'cursor':'pointer'  });
+                         left.css({ '-webkit-filter': 'grayscale(0%)',  'cursor':'pointer' });
+                         $('#roomL').css({ 'cursor':'pointer'  });
+
                          changeSVG(-1, 2, Session.get("position"));
                      }
                      else if(raum == '-2.115' ){
                          Session.set("floor", -2);
                          Session.set('raum', -2.115);
+
+                         right.css({ '-webkit-filter': 'grayscale(100%)','cursor':'default' });
+                         $('#roomR').css({'cursor':'default' });
+                         left.css({ '-webkit-filter': 'grayscale(0%)',  'cursor':'pointer' });
+                         $('#roomL').css({ 'cursor':'pointer'});
+
                          changeSVG(-2, 2, Session.get("position"));
                      }
                      else {
                          Session.set("floor",0);
                          Session.set('raum',  Session.get('roomId'));
+
+                        if(raum == '0.46'){
+                            left.css({ '-webkit-filter': 'grayscale(100%)',  'cursor':'default' });
+                            $('#roomL').css({ 'cursor':'default'});
+                        }else{
+                            left.css({ '-webkit-filter': 'grayscale(0%)',  'cursor':'pointer' });
+                            $('#roomL').css({ 'cursor':'pointer'});
+                        }
+                         right.css({ '-webkit-filter': 'grayscale(0%)','cursor':'pointer' });
+                         $('#roomR').css({ 'cursor':'pointer'});
+
                          changeSVG(0,2,Session.get('position'));
                      }
                  }
@@ -659,6 +684,19 @@ if (Meteor.isClient) {
                   //  iframe.css('background-size', "100%");
                     buttons.css('visibility', 'visible');
                     buttonsRoom.css('visibility', 'hidden');
+
+                    upBtn.disabled = downBtn.disabled = false;
+                    upBtn.css('cursor', 'pointer');
+                    downBtn.css('cursor', 'pointer');
+                    up.css({
+                        '-webkit-filter': 'grayscale(0%)',
+                        'cursor' : 'pointer'
+                    });
+                    down.css({
+                        '-webkit-filter': 'grayscale(0%)',
+                        'cursor' : 'pointer'
+                    });
+
                 }
                 else if(f == -2){
                     Session.set("zoomLevel", 0);
@@ -671,6 +709,20 @@ if (Meteor.isClient) {
                    // iframe.css('background-size', "100%");
                     buttons.css('visibility', 'visible');
                     buttonsRoom.css('visibility', 'hidden');
+
+                    upBtn.disabled = false;
+                    downBtn.disabled = true;
+                    upBtn.css('cursor', 'pointer');
+                    downBtn.css('cursor', 'default');
+                    up.css({
+                        '-webkit-filter': 'grayscale(0%)',
+                        'cursor' : 'pointer'
+                    });
+                    down.css({
+                        '-webkit-filter': 'grayscale(100%)',
+                        'cursor' : 'default'
+                    });
+
                 }
             }
         }
