@@ -93,23 +93,21 @@ fillList = function fillList(xmlFile, btnType) {
     //fuer jeden Entry Listelemente einfuegen
     //entry<heading(*), eintrag(*)>            
     entries.each(function () {
-        var kids = $(this).prop('children');
-        if (btnType != 'info') {
-            for (var i = 0; i < kids.length; i++) { //fuer jeden Kindknoten
-                //heading falls vorhanden
-                var kName = kids.item(i).nodeName;
-                if (kName == 'heading') {
-                    liH = $('<li>').addClass('heading');
-                    liH.html(kids.item(i).innerHTML);
-                    list.append(liH);
-                }
-                else {
-                    liE = $('<li>').addClass('menuel');
-                    liE.html(kids.item(i).innerHTML);
-                    var txt = kids.item(i).innerText || kids.item(i).textContent;
-                    liE.attr('id', $.trim(txt.substr(8, txt.length - 1))); //damit Raumnummer als Id hinzugefuegt wird
-                    list.append(liE);
-                }
+    var kids = $(this).prop('children');
+        for (var i = 0; i < kids.length; i++) { //fuer jeden Kindknoten
+            //heading falls vorhanden
+            var kName = kids.item(i).nodeName;
+            if (kName == 'heading') {
+                liH = $('<li>').addClass('heading');
+                liH.html(kids.item(i).innerHTML);
+                list.append(liH);
+            }
+            else {
+                liE = $('<li>').addClass('menuel');
+                liE.html(kids.item(i).innerHTML);
+                var txt = kids.item(i).innerText || kids.item(i).textContent;
+                liE.attr('id', $.trim(txt.substr(8, txt.length - 1))); //damit Raumnummer als Id hinzugefuegt wird
+                list.append(liE);
             }
         } 
 
@@ -209,6 +207,7 @@ showRoomInfo = function showRoomInfo(roomId, data) {
             var id = $(this).find('id').text();
             if (id == roomId) {
                 xmlFile.append($(this));
+                return false; //raum gefunden, mehr brauchen wir nicht
             }
         });
     fillList(xmlFile, 'info');
