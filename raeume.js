@@ -47,7 +47,7 @@ if (Meteor.isClient) {
 
     //Raum in ebene0 46...ganz links, 66...ganz rechts
     // räume mitte: 40-43von rechts nach inks
-    Session.setDefault('raum', 43);
+    Session.setDefault('raum', 0.43);
 
     //Navigationsbuttons auf Karte
     var upBtn = $('#levelUp');
@@ -122,6 +122,7 @@ if (Meteor.isClient) {
             var id = $(event.target).prop('id');
             Session.set('roomId', $.trim(id)); //ausgewaehlter Raum
             Session.set("position", 2);
+            changeSVG(1, 2,  Session.get("position"));
         },
         'click #kamera' : function(){
             showPic();
@@ -161,13 +162,13 @@ if (Meteor.isClient) {
 
             if (Session.get('floor') == 0) {
                  iframe.css({
-                     'background': "url('Gruppenraum_0_" + raum + ".jpg') no-repeat",
+                     'background': "url('Gruppenraum_"+ raum + ".jpg') no-repeat",
                      'background-size':'cover'
                  });
             }
             if (Session.get('floor') == -1) {
              iframe.css({
-                     'background': "url('Gruppenraum-1_116.jpg') no-repeat",
+                     'background': "url('Gruppenraum_-1_116.jpg') no-repeat",
                      'background-size':'cover'
                  });
          }
@@ -453,7 +454,29 @@ if (Meteor.isClient) {
             }
            //Raumansicht
         }else if(i==2){
-                if(f==0){
+                //wenn aus Menü auf Raum geklickt
+                 if(f==1){
+                     var raum =  Session.get('roomId');
+                     //Wenn in Ebene -1 oder -2
+                     if(raum == '-1.116'){
+                         Session.set("floor", -1);
+                         Session.set('raum', -1.116);
+                         changeSVG(-1, 2, Session.get("position"));
+                     }
+                     else if(raum == -2.115 ){
+                         Session.set("floor", -2);
+                         Session.set('raum', -2.115);
+                         changeSVG(-2, 2, Session.get("position"));
+                     }
+                     else {
+                         Session.set("floor",0);
+                         Session.set('raum',  Session.get('roomId'));
+                         changeSVG(0,2,Session.get('position'));
+                     }
+                 }
+                //Ebene0
+                else if(f==0){
+                     var raum =  Session.get('raum');
 
                     $('#kamera').disabled = false;
                     $('#camBtn').css({
@@ -465,11 +488,10 @@ if (Meteor.isClient) {
                         'cursor' : 'pointer'
                     });
 
-                    var raum =  Session.get('raum');
-
                     if(Session.get('toggledCam')==0){
-                            iframe.css("background" , "url('raum0."+raum+".svg') no-repeat");
-                    if(raum == 46 || raum == 42 || raum == 66 ) {
+                        iframe.css("background" , "url('raum"+raum+".svg') no-repeat");
+
+                    if(raum == 0.46 || raum == 0.42 || raum == 0.66 ) {
                         iframe.css({
                             "background-size": '100%',
                             "background-position": '0px 230px'
@@ -483,7 +505,8 @@ if (Meteor.isClient) {
                     }
                     }else {
                         iframe.css({
-                            'background': "url('Gruppenraum_0_" + raum + ".jpg') no-repeat",
+                           // 'background': "url('Gruppenraum_0_" + raum + ".jpg') no-repeat",
+                            'background': "url('Gruppenraum_" + raum + ".jpg') no-repeat",
                             'background-size':'cover'
                         });
                     }
@@ -495,7 +518,6 @@ if (Meteor.isClient) {
                     tower.css('background-size', "111px");
                     buttons.css('visibility', 'hidden');
                     buttonsRoom.css('visibility', 'visible');
-                    $('#content').css({'background-color': '#FFF'});
                     changeBtns(2);
                 }
                 else if(f == -1){
@@ -525,11 +547,12 @@ if (Meteor.isClient) {
                     //Zoom ausblenden
                     $('#in').css('visibility', 'hidden');
                     $('#out').css('visibility', 'hidden');
+                    //Turm anpassen
                     tower.css('background', "url('stapel-1.svg') no-repeat");
                     tower.css('background-size', "111px");
+
                     buttons.css('visibility', 'hidden');
                     buttonsRoom.css('visibility', 'visible');
-                    $('#content').css({'background-color': '#FFF'});
                     changeBtns(2);
 
 
@@ -663,16 +686,18 @@ if (Meteor.isClient) {
         if(f == 0){
             //Ebene0 nach rechts
             if(i == 1) {
-                if(r == 66){
+                if(r == 0.66){
                     Session.set("floor", Session.get("floor") - 1);
                     changeSVG(-1, 2, Session.get("position"));
-
-
-                }else if(r == 40){
-                    Session.set("raum", 66);
+                }else if(r == 0.41){
+                    Session.set("raum", 0.40);
                     changeSVG(0, 2, Session.get("position"));
-                }else if(r == 46){
-                    Session.set("raum", 43);
+
+                }else if(r == 0.40){
+                    Session.set("raum", 0.66);
+                    changeSVG(0, 2, Session.get("position"));
+                }else if(r == 0.46){
+                    Session.set("raum", 0.43);
                     changeSVG(0, 2, Session.get("position"));
                     //es kann wieder nach links gklickt werden
                     left.css({
@@ -683,19 +708,22 @@ if (Meteor.isClient) {
                         'cursor':'pointer'
                     });
                 }else{
-                    Session.set("raum", Session.get("raum")-1);
+                    Session.set("raum", Session.get("raum")-0.01);
                     changeSVG(0, 2, Session.get("position"));
                 }
 
             //Ebene0 nach links
             }else {
-                if(r == 46){
+                if(r == 0.46){
                 }
-                else if (r == 66) {
-                    Session.set("raum", 40);
+                else if (r == 0.66) {
+                    Session.set("raum", 0.40);
                     changeSVG(0, 2, Session.get("position"));
-                }else if (r == 43) {
-                    Session.set("raum", 46);
+                }else if(r == 0.4){
+                    Session.set("raum", 0.41);
+                    changeSVG(0, 2, Session.get("position"));
+                }else if (r == 0.43) {
+                    Session.set("raum", 0.46);
                     changeSVG(0, 2, Session.get("position"));
 
                     //geht nicht weiter, desktiviere button nach links
@@ -704,10 +732,10 @@ if (Meteor.isClient) {
                         'cursor': 'default'
                     });
                     $('#roomL').css({
-                        'cursor':'default'
+                        'cursor': 'default'
                     });
                 }else{
-                    Session.set("raum", Session.get("raum")+1);
+                    Session.set("raum", Session.get("raum")+0.01);
                     changeSVG(0, 2, Session.get("position"));
                 }
             }
@@ -726,7 +754,7 @@ if (Meteor.isClient) {
                 changeSVG(-2, 2, Session.get("position"));
             }else{
                 Session.set("floor", Session.get("floor") + 1);
-                Session.set('raum', 66);
+                Session.set('raum', 0.66);
                 changeSVG(0, 2, Session.get("position"));
             }
         //Ebene -2
