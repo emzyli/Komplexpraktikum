@@ -211,8 +211,11 @@ if (Meteor.isClient) {
                     }
                     if (Session.get('floor') == -2)
                         changeSVG(-2, 2, Session.get("position"));
-                    if (Session.get('floor') == 0)
-                        changeSVG(0, 2, Session.get("position")); ;
+                    if (Session.get('floor') == 0) {
+                        Session.set('raum', 0.42);
+                        changeSVG(0, 2, Session.get("position"));
+
+                    }
 
                     //geh von Campus zu Ebene0
                 }else if (Session.get('position') == 0) {
