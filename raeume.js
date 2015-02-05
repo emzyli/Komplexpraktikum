@@ -119,7 +119,7 @@ if (Meteor.isClient) {
             toggleMenu("info");
         },
         'click ul.menuort li.menuel': function (event) { //wir kommen in Raumansicht
-            var id = $(event.target).prop('id');
+            var id = $(event.currentTarget).prop('id');
             Session.set('roomId', $.trim(id)); //ausgewaehlter Raum
             Session.set("position", 2);
             changeSVG(1, 2,  Session.get("position"));
@@ -463,7 +463,7 @@ if (Meteor.isClient) {
                          Session.set('raum', -1.116);
                          changeSVG(-1, 2, Session.get("position"));
                      }
-                     else if(raum == -2.115 ){
+                     else if(raum == '-2.115' ){
                          Session.set("floor", -2);
                          Session.set('raum', -2.115);
                          changeSVG(-2, 2, Session.get("position"));
