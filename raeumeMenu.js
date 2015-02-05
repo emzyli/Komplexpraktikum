@@ -106,7 +106,7 @@ fillList = function fillList(xmlFile, btnType) {
                 liE = $('<li>').addClass('menuel');
                 if (btnType == 'info') { //fuer schoenere Darstellung
                     switch (i) {
-                        case 0: 'Raum ' + liE.html(kids.item(i).innerHTML); break;
+                        case 0: liE.html('Raum ' + kids.item(i).innerHTML); break;
                         case 2: liE.html(kids.item(i).innerHTML + ' Personen'); break;
                         case 4: liE.html(kids.item(i).innerHTML + ' PC'); break;
                         case 5: liE.html(kids.item(i).innerHTML + ' Beamer'); break;
